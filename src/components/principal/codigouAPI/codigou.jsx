@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../../../template/header";
 import { useNavigate } from "react-router-dom";
 
-import { principalURL } from "../../../services/principal";
+import { gatewayURL } from "../../../services/principal";
 
 const Codigou = () => {
   const [codigou, setCodigou] = useState([]);
@@ -22,7 +22,7 @@ const Codigou = () => {
 
   useEffect(() => {
     fetch(
-      `${principalURL}/codigou/page?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}`
+      `${gatewayURL}/codigou/page?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}`
     )
       .then((response) => response.json())
       .then((data) => {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { principalURL } from "../../../services/principal";
+import { gatewayURL } from "../../../services/principal";
 import HeaderPrincipal from "../../../template/header";
 
 const Dashboard = () => {
@@ -14,7 +14,7 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${principalURL}/biblioteca/page?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}`
+          `${gatewayURL}/biblioteca/page?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}`
         );
         if (!response.ok) {
           console.log("Respuesta no exitosa");

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { principalURL } from "../../../services/principal";
+import { gatewayURL } from "../../../services/principal";
 
 import soundOk from "../../../assetss/sounds/ok.mp3";
 import soundError from "../../../assetss/sounds/error.mp3";
@@ -28,7 +28,7 @@ const IngresoBiblioteca = () => {
 
     try {
       const response = await fetch(
-        `${principalURL}/biblioteca/${event.target.value}`,
+        `${gatewayURL}/biblioteca/${event.target.value}`,
         {
           method: "POST",
         }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { prestamosURL } from "../../../services/principal";
+import { gatewayURL } from "../../../services/principal";
 import HeaderPrincipal from "../../../template/header";
 import Select from "react-select";
 import DatePicker from "react-datepicker";
@@ -30,7 +30,7 @@ const Search = () => {
       const formattedStartDate = formatDates(startDate);
       const formattedEndDate = formatDates(endDate);
       fetch(
-        `${prestamosURL}/prestamoaudiovisual/${endpoint}?fechaInicial=${formattedStartDate}&fechaFinal=${formattedEndDate}`
+        `${gatewayURL}/prestamoaudiovisual/${endpoint}?fechaInicial=${formattedStartDate}&fechaFinal=${formattedEndDate}`
       )
         .then((response) => response.json())
         .then((data) => setData(data))
@@ -38,17 +38,17 @@ const Search = () => {
     };
 
     if (selectedOption && selectedOption.value === "codigou") {
-      fetch(`${prestamosURL}/prestamoaudiovisual/codigou/${codigoUdec}`)
+      fetch(`${gatewayURL}/prestamoaudiovisual/codigou/${codigoUdec}`)
         .then((response) => response.json())
         .then((data) => setData(data))
         .catch((error) => setError(error.toString()));
     } else if (selectedOption && selectedOption.value === "idRfid") {
-      fetch(`${prestamosURL}/prestamoaudiovisual/rfid/${idRfid}`)
+      fetch(`${gatewayURL}/prestamoaudiovisual/rfid/${idRfid}`)
         .then((response) => response.json())
         .then((data) => setData(data))
         .catch((error) => setError(error.toString()));
     } else if (selectedOption && selectedOption.value === "devolucionempty") {
-      fetch(`${prestamosURL}/prestamoaudiovisual/devolucionempty`)
+      fetch(`${gatewayURL}/prestamoaudiovisual/devolucionempty`)
         .then((response) => response.json())
         .then((data) => setData(data))
         .catch((error) => setError(error.toString()));
@@ -57,7 +57,7 @@ const Search = () => {
     } else if (selectedOption && selectedOption.value === "fechadevolucion") {
       fetchWithDates("fechadevolucion");
     } else if (selectedOption && selectedOption.value === "nombreObjeto") {
-      fetch(`${prestamosURL}/prestamoaudiovisual/inventario/${nombreObjeto}`)
+      fetch(`${gatewayURL}/prestamoaudiovisual/inventario/${nombreObjeto}`)
         .then((response) => response.json())
         .then((data) => setData(data))
         .catch((error) => setError(error.toString()));

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { principalURL } from "../../../services/principal";
+import { gatewayURL } from "../../../services/principal";
 
 import soundOk from "../../../assetss/sounds/ok.mp3";
 import soundError from "../../../assetss/sounds/error.mp3";
@@ -29,7 +29,7 @@ const IngresoLaboratorio = () => {
     try {
       // Intentar registrar una salida
       let response = await fetch(
-        `${principalURL}/laboratorio/out/${event.target.value}`,
+        `${gatewayURL}/laboratorio/out/${event.target.value}`,
         { method: "POST" }
       );
 
@@ -63,7 +63,7 @@ const IngresoLaboratorio = () => {
       } else if (response.status === 409 || response.status === 400) {
         // Si no ha ingresado, registrar un ingreso
         response = await fetch(
-          `${principalURL}/laboratorio/${event.target.value}`,
+          `${gatewayURL}/laboratorio/${event.target.value}`,
           { method: "POST" }
         );
         if (response.status === 201) {

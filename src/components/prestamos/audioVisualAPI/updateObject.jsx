@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
-import { prestamosURL } from "../../../services/principal";
+import { gatewayURL } from "../../../services/principal";
 
 import HeaderPrincipal from "../../../template/header";
 
@@ -41,7 +41,7 @@ const UpdateObject = () => {
 
     try {
       const response = await fetch(
-        `${prestamosURL}/audiovisual/update/${data.idAudioVisual}`,
+        `${gatewayURL}/audiovisual/update/${data.idAudioVisual}`,
         {
           method: "PATCH",
           headers: {

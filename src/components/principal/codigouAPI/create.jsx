@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { principalURL } from "../../../services/principal";
+import { gatewayURL } from "../../../services/principal";
 
 import HeaderPrincipal from "../../../template/header";
 
@@ -27,7 +27,7 @@ const Create = () => {
   const audioError = new Audio(soundError);
 
   useEffect(() => {
-    fetch(`${principalURL}/rfid/without`)
+    fetch(`${gatewayURL}/rfid/without`)
       .then((response) => response.json())
       .then((data) => {
         setData((prevData) => ({
@@ -56,7 +56,7 @@ const Create = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    let url = `${principalURL}/codigou`;
+    let url = `${gatewayURL}/codigou`;
     console.log(data);
     fetch(url, {
       method: "POST",

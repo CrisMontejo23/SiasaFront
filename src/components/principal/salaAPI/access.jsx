@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { principalURL } from "../../../services/principal";
+import { gatewayURL } from "../../../services/principal";
 
 import soundOk from "../../../assetss/sounds/ok.mp3";
 import soundError from "../../../assetss/sounds/error.mp3";
@@ -29,7 +29,7 @@ const IngresoSala = () => {
     try {
       // Intentar registrar una salida
       let response = await fetch(
-        `${principalURL}/salacomputo/out/${event.target.value}`,
+        `${gatewayURL}/salacomputo/out/${event.target.value}`,
         { method: "POST" }
       );
 
@@ -56,7 +56,7 @@ const IngresoSala = () => {
         // Si no ha ingresado, registrar un ingreso
         if (selectedRoom) {
           response = await fetch(
-            `${principalURL}/salacomputo/${event.target.value}?salaDestino=${selectedRoom}`,
+            `${gatewayURL}/salacomputo/${event.target.value}?salaDestino=${selectedRoom}`,
             { method: "POST" }
           );
           if (response.status === 201) {
@@ -124,7 +124,7 @@ const IngresoSala = () => {
         // Si no ha ingresado, registrar un ingreso
         if (selectedRoom) {
           response = await fetch(
-            `${principalURL}/salacomputo/${event.target.value}?salaDestino=${selectedRoom}`,
+            `${gatewayURL}/salacomputo/${event.target.value}?salaDestino=${selectedRoom}`,
             { method: "POST" }
           );
           if (response.status === 201) {

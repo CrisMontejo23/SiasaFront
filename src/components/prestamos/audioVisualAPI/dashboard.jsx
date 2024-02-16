@@ -3,8 +3,7 @@ import Header from "../../../template/header";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import { prestamosURL } from "../../../services/principal";
-import { principalURL } from "../../../services/principal";
+import { gatewayURL } from "../../../services/principal";
 
 import soundOk from "../../../assetss/sounds/ok.mp3";
 import soundError from "../../../assetss/sounds/error.mp3";
@@ -57,7 +56,7 @@ const Inventario = () => {
 
   useEffect(() => {
     fetch(
-      `${prestamosURL}/audiovisual/page?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}`
+      `${gatewayURL}/audiovisual/page?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -89,7 +88,7 @@ const Inventario = () => {
   useEffect(() => {
     if (rfid) {
       axios
-        .get(`${principalURL}/codigou/rfid/${rfid}`)
+        .get(`${gatewayURL}/codigou/rfid/${rfid}`)
         .then((response) => {
           console.log(response);
           if (response.status === 200) {
@@ -135,7 +134,7 @@ const Inventario = () => {
   useEffect(() => {
     if (rfid && nombreEstudiante !== "") {
       axios
-        .get(`${prestamosURL}/prestamoaudiovisual/rfid/${rfid}`)
+        .get(`${gatewayURL}/prestamoaudiovisual/rfid/${rfid}`)
         .then((response) => {
           console.log(response);
           let lastPrestamo = response.data[response.data.length - 1];
@@ -197,7 +196,7 @@ const Inventario = () => {
 
   const handleRegisterClick = () => {
     if (lastPrestamo.fechaDevolucion == null && nombreEstudiante !== "") {
-      let urlOut = `${prestamosURL}/prestamoaudiovisual/out?idPrestamoAudioVisual=${idPrestamo}&observaciones=${encodeURIComponent(
+      let urlOut = `${gatewayURL}/prestamoaudiovisual/out?idPrestamoAudioVisual=${idPrestamo}&observaciones=${encodeURIComponent(
         observaciones
       )}`;
       fetch(urlOut, {
@@ -222,7 +221,7 @@ const Inventario = () => {
             }, 2500);
           } else if (response.status === 400) {
             if (objetoSeleccionado) {
-              let urlIn = `${prestamosURL}/prestamoaudiovisual/in?idInventarioAudioVisual=${idAudioVisual}&idRfid=${encodeURIComponent(
+              let urlIn = `${gatewayURL}/prestamoaudiovisual/in?idInventarioAudioVisual=${idAudioVisual}&idRfid=${encodeURIComponent(
                 rfid
               )}&nota=${encodeURIComponent(
                 observaciones
@@ -325,7 +324,7 @@ const Inventario = () => {
         .catch((error) => console.error("Error:", error));
     } else {
       if (objetoSeleccionado) {
-        let urlIn = `${prestamosURL}/prestamoaudiovisual/in?idInventarioAudioVisual=${idAudioVisual}&idRfid=${encodeURIComponent(
+        let urlIn = `${gatewayURL}/prestamoaudiovisual/in?idInventarioAudioVisual=${idAudioVisual}&idRfid=${encodeURIComponent(
           rfid
         )}&nota=${encodeURIComponent(observaciones)}&cantidad=${cantidad}`;
         fetch(urlIn, {

@@ -2,7 +2,7 @@ import React from "react";
 import "../../assetss/css/login/login.css";
 import logo from "../../assetss/img/logo.png";
 import axios from "axios";
-import { apiURL } from "../../services/principal";
+import { gatewayURL } from "../../services/principal";
 import bgImage from "../../assetss/img/background4.jpg";
 
 class Login extends React.Component {
@@ -26,7 +26,7 @@ class Login extends React.Component {
 
   manejadorSubmit = (e) => {
     e.preventDefault();
-    let url = apiURL + "login";
+    let url = gatewayURL + "login";
     axios
       .post(url, this.state.form)
       .then((response) => {

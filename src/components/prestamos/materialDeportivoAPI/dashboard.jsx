@@ -3,8 +3,8 @@ import Header from "../../../template/header";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-import { prestamosURL } from "../../../services/principal";
-import { principalURL } from "../../../services/principal";
+import { gatewayURL } from "../../../services/principal";
+// import { principalURL } from "../../../services/principal";
 
 import soundOk from "../../../assetss/sounds/ok.mp3";
 import soundError from "../../../assetss/sounds/error.mp3";
@@ -57,7 +57,7 @@ const Inventario = () => {
 
   useEffect(() => {
     fetch(
-      `${prestamosURL}/materialdeportivo/page?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}`
+      `${gatewayURL}/materialdeportivo/page?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}`
     )
       .then((response) => response.json())
       .then((data) => {
@@ -89,7 +89,7 @@ const Inventario = () => {
   useEffect(() => {
     if (rfid) {
       axios
-        .get(`${principalURL}/codigou/rfid/${rfid}`)
+        .get(`${gatewayURL}/codigou/rfid/${rfid}`)
         .then((response) => {
           console.log(response);
           if (response.status === 200) {
@@ -135,7 +135,7 @@ const Inventario = () => {
   useEffect(() => {
     if (rfid && nombreEstudiante !== "") {
       axios
-        .get(`${prestamosURL}/prestamomaterialdeportivo/rfid/${rfid}`)
+        .get(`${gatewayURL}/prestamomaterialdeportivo/rfid/${rfid}`)
         .then((response) => {
           console.log(response);
           let lastPrestamo = response.data[response.data.length - 1];
@@ -200,7 +200,7 @@ const Inventario = () => {
 
   const handleRegisterClick = () => {
     if (lastPrestamo.fechaDevolucion == null && nombreEstudiante !== "") {
-      let urlOut = `${prestamosURL}/prestamomaterialdeportivo/out?idPrestamoMaterialDeportivo=${idPrestamo}&observaciones=${encodeURIComponent(
+      let urlOut = `${gatewayURL}/prestamomaterialdeportivo/out?idPrestamoMaterialDeportivo=${idPrestamo}&observaciones=${encodeURIComponent(
         observaciones
       )}`;
       fetch(urlOut, {
@@ -225,7 +225,7 @@ const Inventario = () => {
             }, 2500);
           } else if (response.status === 400) {
             if (objetoSeleccionado) {
-              let urlIn = `${prestamosURL}/prestamomaterialdeportivo/in?idInventarioMaterialDeportivo=${idMaterialDeportivo}&idRfid=${encodeURIComponent(
+              let urlIn = `${gatewayURL}/prestamomaterialdeportivo/in?idInventarioMaterialDeportivo=${idMaterialDeportivo}&idRfid=${encodeURIComponent(
                 rfid
               )}&nota=${encodeURIComponent(
                 observaciones
@@ -328,7 +328,7 @@ const Inventario = () => {
         .catch((error) => console.error("Error:", error));
     } else {
       if (objetoSeleccionado) {
-        let urlIn = `${prestamosURL}/prestamomaterialdeportivo/in?idInventarioMaterialDeportivo=${idMaterialDeportivo}&idRfid=${encodeURIComponent(
+        let urlIn = `${gatewayURL}/prestamomaterialdeportivo/in?idInventarioMaterialDeportivo=${idMaterialDeportivo}&idRfid=${encodeURIComponent(
           rfid
         )}&nota=${encodeURIComponent(observaciones)}&cantidad=${cantidad}`;
         fetch(urlIn, {

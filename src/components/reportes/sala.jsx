@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { reportesURL } from "../../services/principal";
+import { gatewayURL } from "../../services/principal";
 
 import HeaderPrincipal from "../../template/header";
 import DatePicker from "react-datepicker";
@@ -16,7 +16,7 @@ const SalaReport = () => {
       ? fechaFinal.toISOString().split("T")[0]
       : "";
 
-    const url = `${reportesURL}/report/salacomputo/download?fechaInicial=${fechaInicialFormat}&fechaFinal=${fechaFinalFormat}&tipo=pdf`;
+    const url = `${gatewayURL}/report/salacomputo/download?fechaInicial=${fechaInicialFormat}&fechaFinal=${fechaFinalFormat}&tipo=pdf`;
 
     // Realizar la petición GET
     const response = await fetch(url);

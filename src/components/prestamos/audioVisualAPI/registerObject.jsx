@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { prestamosURL } from "../../../services/principal";
+import { gatewayURL } from "../../../services/principal";
 
 import HeaderPrincipal from "../../../template/header";
 
@@ -29,7 +29,7 @@ const RegisterObject = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    let url = `${prestamosURL}/audiovisual`;
+    let url = `${gatewayURL}/audiovisual`;
     console.log(data);
     fetch(url, {
       method: "POST",

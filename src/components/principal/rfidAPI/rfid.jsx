@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Header from "../../../template/header";
 
-import { principalURL } from "../../../services/principal";
+import { gatewayURL } from "../../../services/principal";
 import axios from "axios";
 
 import soundOk from "../../../assetss/sounds/ok.mp3";
@@ -29,7 +29,7 @@ const Rfid = () => {
   };
 
   const fetchRfidWithout = () => {
-    let url = principalURL + "/rfid/without";
+    let url = gatewayURL + "/rfid/without";
     axios
       .get(url)
       .then((response) => {
@@ -66,7 +66,7 @@ const Rfid = () => {
   };
 
   const registerRfid = (rfid) => {
-    let url = `${principalURL}/rfid`;
+    let url = `${gatewayURL}/rfid`;
     fetch(url, {
       method: "POST",
       headers: {
@@ -133,7 +133,7 @@ const Rfid = () => {
   };
 
   const fetchRfidList = () => {
-    let url = `${principalURL}/rfid/page?pageNumber=${pageNumber}&pageSize=${pageSize}`;
+    let url = `${gatewayURL}/rfid/page?pageNumber=${pageNumber}&pageSize=${pageSize}`;
     axios
       .get(url)
       .then((response) => {
@@ -162,7 +162,7 @@ const Rfid = () => {
   };
 
   const searchRfid = (rfid) => {
-    let url = principalURL + "/rfid/" + rfid;
+    let url = gatewayURL + "/rfid/" + rfid;
     axios
       .get(url)
       .then((response) => {
@@ -204,7 +204,7 @@ const Rfid = () => {
   };
 
   const deleteRfid = (idRfid) => {
-    let url = `${principalURL}/rfid/${idRfid}`;
+    let url = `${gatewayURL}/rfid/${idRfid}`;
     axios
       .delete(url)
       .then((response) => {

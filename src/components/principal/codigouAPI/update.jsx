@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-import { principalURL } from "../../../services/principal";
+import { gatewayURL } from "../../../services/principal";
 
 import HeaderPrincipal from "../../../template/header";
 
@@ -27,7 +27,7 @@ const Update = () => {
   });
 
   useEffect(() => {
-    let url = `${principalURL}/codigou/${codigou}`;
+    let url = `${gatewayURL}/codigou/${codigou}`;
     fetch(url)
       .then((response) => response.json())
       .then((data) => setData(data))
@@ -52,7 +52,7 @@ const Update = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    let url = `${principalURL}/codigou/update/${codigou}`;
+    let url = `${gatewayURL}/codigou/update/${codigou}`;
     fetch(url, {
       method: "PATCH",
       headers: {
@@ -86,7 +86,7 @@ const Update = () => {
   };
 
   const handleDelete = () => {
-    let url = `${principalURL}/codigou/${codigou}`;
+    let url = `${gatewayURL}/codigou/${codigou}`;
     fetch(url, {
       method: "DELETE",
     })

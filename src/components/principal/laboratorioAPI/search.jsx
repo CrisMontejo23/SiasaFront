@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { principalURL } from "../../../services/principal";
+import { gatewayURL } from "../../../services/principal";
 import HeaderPrincipal from "../../../template/header";
 import Select from "react-select";
 import DatePicker from "react-datepicker";
@@ -27,7 +27,7 @@ const Search = () => {
       const formattedStartDate = formatDates(startDate);
       const formattedEndDate = formatDates(endDate);
       fetch(
-        `${principalURL}/laboratorio/${endpoint}?fechaInicial=${formattedStartDate}&fechaFinal=${formattedEndDate}`
+        `${gatewayURL}/laboratorio/${endpoint}?fechaInicial=${formattedStartDate}&fechaFinal=${formattedEndDate}`
       )
         .then((response) => response.json())
         .then((data) => setData(data))
@@ -38,7 +38,7 @@ const Search = () => {
       const formattedStartDate = formatDates(startDate);
       const formattedEndDate = formatDates(endDate);
       fetch(
-        `${principalURL}/laboratorio/${endpoint}?idCodigoU=${codigo}&fechaInicial=${formattedStartDate}&fechaFinal=${formattedEndDate}`
+        `${gatewayURL}/laboratorio/${endpoint}?idCodigoU=${codigo}&fechaInicial=${formattedStartDate}&fechaFinal=${formattedEndDate}`
       )
         .then((response) => response.json())
         .then((data) => setData(data))
@@ -46,7 +46,7 @@ const Search = () => {
     };
 
     if (selectedOption && selectedOption.value === "codigo") {
-      fetch(`${principalURL}/laboratorio/codigou/${codigo}`)
+      fetch(`${gatewayURL}/laboratorio/codigou/${codigo}`)
         .then((response) => response.json())
         .then((data) => setData(data))
         .catch((error) => setError(error.toString()));

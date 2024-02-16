@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { principalURL } from "../../../services/principal";
+import { gatewayURL } from "../../../services/principal";
 import HeaderPrincipal from "../../../template/header";
 import Select from "react-select";
 import DatePicker from "react-datepicker";
@@ -22,7 +22,7 @@ const Search = () => {
 
   useEffect(() => {
     if (selectedOption && selectedOption.value === "codigo") {
-      fetch(`${principalURL}/biblioteca/codigou/${codigo}`)
+      fetch(`${gatewayURL}/biblioteca/codigou/${codigo}`)
         .then((response) => response.json())
         .then((data) => setData(data))
         .catch((error) => setError(error.toString()));
@@ -48,7 +48,7 @@ const Search = () => {
         })
         .replace(/(\d{2})\/(\d{2})\/(\d{4}),\s/, "$3-$2-$1T");
       fetch(
-        `${principalURL}/biblioteca/fechaingreso?fechaInicial=${formattedStartDate}&fechaFinal=${formattedEndDate}`
+        `${gatewayURL}/biblioteca/fechaingreso?fechaInicial=${formattedStartDate}&fechaFinal=${formattedEndDate}`
       )
         .then((response) => response.json())
         .then((data) => setData(data))
@@ -78,7 +78,7 @@ const Search = () => {
         })
         .replace(/(\d{2})\/(\d{2})\/(\d{4}),\s/, "$3-$2-$1T");
       fetch(
-        `${principalURL}/biblioteca/idcodigouandfechaingreso?idCodigoU=${codigo}&fechaInicial=${formattedStartDate}&fechaFinal=${formattedEndDate}`
+        `${gatewayURL}/biblioteca/idcodigouandfechaingreso?idCodigoU=${codigo}&fechaInicial=${formattedStartDate}&fechaFinal=${formattedEndDate}`
       )
         .then((response) => response.json())
         .then((data) => setData(data))
