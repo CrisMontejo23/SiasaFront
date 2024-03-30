@@ -16,6 +16,8 @@ const options = [
 ];
 
 const Search = () => {
+  let token = localStorage.getItem("token");
+
   const [selectedOption, setSelectedOption] = useState(null);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -30,7 +32,12 @@ const Search = () => {
       const formattedStartDate = formatDates(startDate);
       const formattedEndDate = formatDates(endDate);
       fetch(
-        `${gatewayURL}/prestamomaterialdeportivo/${endpoint}?fechaInicial=${formattedStartDate}&fechaFinal=${formattedEndDate}`
+        `${gatewayURL}/prestamomaterialdeportivo/${endpoint}?fechaInicial=${formattedStartDate}&fechaFinal=${formattedEndDate}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       )
         .then((response) => response.json())
         .then((data) => setData(data))
@@ -38,17 +45,29 @@ const Search = () => {
     };
 
     if (selectedOption && selectedOption.value === "codigou") {
-      fetch(`${gatewayURL}/prestamomaterialdeportivo/codigou/${codigoUdec}`)
+      fetch(`${gatewayURL}/prestamomaterialdeportivo/codigou/${codigoUdec}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
         .then((response) => response.json())
         .then((data) => setData(data))
         .catch((error) => setError(error.toString()));
     } else if (selectedOption && selectedOption.value === "idRfid") {
-      fetch(`${gatewayURL}/prestamomaterialdeportivo/rfid/${idRfid}`)
+      fetch(`${gatewayURL}/prestamomaterialdeportivo/rfid/${idRfid}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
         .then((response) => response.json())
         .then((data) => setData(data))
         .catch((error) => setError(error.toString()));
     } else if (selectedOption && selectedOption.value === "devolucionempty") {
-      fetch(`${gatewayURL}/prestamomaterialdeportivo/devolucionempty`)
+      fetch(`${gatewayURL}/prestamomaterialdeportivo/devolucionempty`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
         .then((response) => response.json())
         .then((data) => setData(data))
         .catch((error) => setError(error.toString()));
@@ -58,13 +77,26 @@ const Search = () => {
       fetchWithDates("fechadevolucion");
     } else if (selectedOption && selectedOption.value === "nombreObjeto") {
       fetch(
-        `${gatewayURL}/prestamomaterialdeportivo/inventario/${nombreObjeto}`
+        `${gatewayURL}/prestamomaterialdeportivo/inventario/${nombreObjeto}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       )
         .then((response) => response.json())
         .then((data) => setData(data))
         .catch((error) => setError(error.toString()));
     }
-  }, [selectedOption, codigoUdec, idRfid, nombreObjeto, startDate, endDate]);
+  }, [
+    selectedOption,
+    codigoUdec,
+    idRfid,
+    nombreObjeto,
+    startDate,
+    endDate,
+    token,
+  ]);
 
   const formatDates = (date) => {
     return date

@@ -10,6 +10,8 @@ import soundOk from "../../../assetss/sounds/ok.mp3";
 import soundError from "../../../assetss/sounds/error.mp3";
 
 const Update = () => {
+  let token = localStorage.getItem("token");
+
   const [errorMessage, setErrorMessage] = useState("");
   const audioOk = new Audio(soundOk);
   const audioError = new Audio(soundError);
@@ -28,11 +30,15 @@ const Update = () => {
 
   useEffect(() => {
     let url = `${gatewayURL}/codigou/${codigou}`;
-    fetch(url)
+    fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((response) => response.json())
       .then((data) => setData(data))
       .catch((error) => console.error(error));
-  }, [codigou]);
+  }, [codigou, token]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -57,6 +63,7 @@ const Update = () => {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(data),
     })
@@ -89,6 +96,9 @@ const Update = () => {
     let url = `${gatewayURL}/codigou/${codigou}`;
     fetch(url, {
       method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
       .then((response) => {
         if (!response.ok) {

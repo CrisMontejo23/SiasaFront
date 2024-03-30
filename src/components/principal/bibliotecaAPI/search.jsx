@@ -13,6 +13,8 @@ const options = [
 ];
 
 const Search = () => {
+  let token = localStorage.getItem("token");
+
   const [selectedOption, setSelectedOption] = useState(null);
   const [codigo, setCodigo] = useState("");
   const [startDate, setStartDate] = useState(new Date());
@@ -22,7 +24,11 @@ const Search = () => {
 
   useEffect(() => {
     if (selectedOption && selectedOption.value === "codigo") {
-      fetch(`${gatewayURL}/biblioteca/codigou/${codigo}`)
+      fetch(`${gatewayURL}/biblioteca/codigou/${codigo}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
         .then((response) => response.json())
         .then((data) => setData(data))
         .catch((error) => setError(error.toString()));
@@ -48,7 +54,12 @@ const Search = () => {
         })
         .replace(/(\d{2})\/(\d{2})\/(\d{4}),\s/, "$3-$2-$1T");
       fetch(
-        `${gatewayURL}/biblioteca/fechaingreso?fechaInicial=${formattedStartDate}&fechaFinal=${formattedEndDate}`
+        `${gatewayURL}/biblioteca/fechaingreso?fechaInicial=${formattedStartDate}&fechaFinal=${formattedEndDate}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       )
         .then((response) => response.json())
         .then((data) => setData(data))
@@ -78,13 +89,18 @@ const Search = () => {
         })
         .replace(/(\d{2})\/(\d{2})\/(\d{4}),\s/, "$3-$2-$1T");
       fetch(
-        `${gatewayURL}/biblioteca/idcodigouandfechaingreso?idCodigoU=${codigo}&fechaInicial=${formattedStartDate}&fechaFinal=${formattedEndDate}`
+        `${gatewayURL}/biblioteca/idcodigouandfechaingreso?idCodigoU=${codigo}&fechaInicial=${formattedStartDate}&fechaFinal=${formattedEndDate}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       )
         .then((response) => response.json())
         .then((data) => setData(data))
         .catch((error) => setError(error.toString()));
     }
-  }, [selectedOption, codigo, startDate, endDate]);
+  }, [selectedOption, codigo, startDate, endDate, token]);
 
   return (
     <React.Fragment>
@@ -101,7 +117,7 @@ const Search = () => {
           style={{
             fontSize: "35px",
             fontFamily: "sans-serif",
-            fontWeight: "bold",            
+            fontWeight: "bold",
           }}
         >
           REGISTROS BIBLIOTECA
@@ -143,7 +159,7 @@ const Search = () => {
             className="text"
             style={{
               fontWeight: "bold",
-              fontSize: "18px",              
+              fontSize: "18px",
             }}
           >
             Seleccione el tipo de busqueda:

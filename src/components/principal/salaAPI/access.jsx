@@ -10,6 +10,8 @@ import carnetImage from "../../../assetss/img/carnet.png";
 import BackgroundImage from "../../../assetss/img/background3.jpg";
 
 const IngresoSala = () => {
+  let token = localStorage.getItem("token");
+
   const [idRfid, setIdRfid] = useState("");
   const [status, setStatus] = useState(null);
   const [name, setName] = useState(null);
@@ -30,7 +32,7 @@ const IngresoSala = () => {
       // Intentar registrar una salida
       let response = await fetch(
         `${gatewayURL}/salacomputo/out/${event.target.value}`,
-        { method: "POST" }
+        { method: "POST", headers: { Authorization: `Bearer ${token}` } }
       );
 
       if (response.status === 201) {
@@ -57,7 +59,7 @@ const IngresoSala = () => {
         if (selectedRoom) {
           response = await fetch(
             `${gatewayURL}/salacomputo/${event.target.value}?salaDestino=${selectedRoom}`,
-            { method: "POST" }
+            { method: "POST", headers: { Authorization: `Bearer ${token}` } }
           );
           if (response.status === 201) {
             audioOk.play();
@@ -125,7 +127,7 @@ const IngresoSala = () => {
         if (selectedRoom) {
           response = await fetch(
             `${gatewayURL}/salacomputo/${event.target.value}?salaDestino=${selectedRoom}`,
-            { method: "POST" }
+            { method: "POST", headers: { Authorization: `Bearer ${token}` } }
           );
           if (response.status === 201) {
             audioOk.play();

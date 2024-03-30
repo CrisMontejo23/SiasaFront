@@ -3,6 +3,8 @@ import { gatewayURL } from "../../../services/principal";
 import HeaderPrincipal from "../../../template/header";
 
 const Dashboard = () => {
+  let token = localStorage.getItem("token");
+
   const [data, setData] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
   const [pageSize, setPageSize] = useState(10);
@@ -14,7 +16,12 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         const response = await fetch(
-          `${gatewayURL}/campus/page?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}`
+          `${gatewayURL}/campus/page?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         );
         if (!response.ok) {
           console.log("Respuesta no exitosa");
@@ -35,7 +42,7 @@ const Dashboard = () => {
     };
 
     fetchData();
-  }, [pageNumber, pageSize, sortBy, sortOrder, update]);
+  }, [pageNumber, pageSize, sortBy, sortOrder, update, token]);
 
   return (
     <div style={{ backgroundColor: "white" }}>

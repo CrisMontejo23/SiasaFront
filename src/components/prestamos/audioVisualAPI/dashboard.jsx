@@ -54,9 +54,16 @@ const Inventario = () => {
     setObjetoSeleccionado(record);
   };
 
+  let token = localStorage.getItem("token");
+
   useEffect(() => {
     fetch(
-      `${gatewayURL}/audiovisual/page?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}`
+      `${gatewayURL}/audiovisual/page?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     )
       .then((response) => response.json())
       .then((data) => {
@@ -88,7 +95,11 @@ const Inventario = () => {
   useEffect(() => {
     if (rfid) {
       axios
-        .get(`${gatewayURL}/codigou/rfid/${rfid}`)
+        .get(`${gatewayURL}/codigou/rfid/${rfid}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((response) => {
           console.log(response);
           if (response.status === 200) {
@@ -134,7 +145,11 @@ const Inventario = () => {
   useEffect(() => {
     if (rfid && nombreEstudiante !== "") {
       axios
-        .get(`${gatewayURL}/prestamoaudiovisual/rfid/${rfid}`)
+        .get(`${gatewayURL}/prestamoaudiovisual/rfid/${rfid}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((response) => {
           console.log(response);
           let lastPrestamo = response.data[response.data.length - 1];
@@ -203,6 +218,7 @@ const Inventario = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       })
         .then((response) => {
@@ -230,6 +246,7 @@ const Inventario = () => {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
                 },
               })
                 .then((response) => {
@@ -331,6 +348,7 @@ const Inventario = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         })
           .then((response) => {
@@ -896,7 +914,9 @@ const Inventario = () => {
                           marginLeft: "15px",
                         }}
                         value={observaciones}
-                        onChange={(e) => setObservaciones(e.target.value.toUpperCase())}
+                        onChange={(e) =>
+                          setObservaciones(e.target.value.toUpperCase())
+                        }
                       />
                       <button
                         type="button"
@@ -980,7 +1000,9 @@ const Inventario = () => {
                         marginLeft: "15px",
                       }}
                       value={observaciones}
-                      onChange={(e) => setObservaciones(e.target.value.toUpperCase())}
+                      onChange={(e) =>
+                        setObservaciones(e.target.value.toUpperCase())
+                      }
                     />
                     <button
                       type="button"

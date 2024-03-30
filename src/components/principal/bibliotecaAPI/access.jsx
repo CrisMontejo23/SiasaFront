@@ -10,6 +10,8 @@ import carnetImage from "../../../assetss/img/carnet.png";
 import BackgroundImage from "../../../assetss/img/background2.jpg";
 
 const IngresoBiblioteca = () => {
+  let token = localStorage.getItem("token");
+
   const [idRfid, setIdRfid] = useState("");
   const [status, setStatus] = useState(null);
   const [name, setName] = useState(null);
@@ -31,6 +33,9 @@ const IngresoBiblioteca = () => {
         `${gatewayURL}/biblioteca/${event.target.value}`,
         {
           method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -53,7 +58,7 @@ const IngresoBiblioteca = () => {
         setIdRfid("");
         setTimeout(() => {
           setName(null);
-          setStatus(null);          
+          setStatus(null);
         }, 5000);
       } else if (response.status === 404) {
         setName(null);
@@ -62,7 +67,7 @@ const IngresoBiblioteca = () => {
         setIdRfid("");
         setTimeout(() => {
           setName(null);
-          setStatus(null);          
+          setStatus(null);
         }, 5000);
       } else if (response.status === 500) {
         setName(null);
@@ -70,7 +75,7 @@ const IngresoBiblioteca = () => {
         setIdRfid("");
         setTimeout(() => {
           setName(null);
-          setStatus(null);          
+          setStatus(null);
         }, 5000);
       }
     } catch (error) {

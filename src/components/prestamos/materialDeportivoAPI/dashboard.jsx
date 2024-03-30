@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { gatewayURL } from "../../../services/principal";
-// import { principalURL } from "../../../services/principal";
 
 import soundOk from "../../../assetss/sounds/ok.mp3";
 import soundError from "../../../assetss/sounds/error.mp3";
@@ -15,6 +14,8 @@ import reload from "../../../assetss/img/reload.png";
 import updateLogo from "../../../assetss/img/system-update.png";
 
 const Inventario = () => {
+  let token = localStorage.getItem("token");
+
   const [update, setUpdate] = useState(false);
   const [objects, setObjects] = useState([]);
   const [allObjects, setAllObjects] = useState([]);
@@ -57,7 +58,12 @@ const Inventario = () => {
 
   useEffect(() => {
     fetch(
-      `${gatewayURL}/materialdeportivo/page?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}`
+      `${gatewayURL}/materialdeportivo/page?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     )
       .then((response) => response.json())
       .then((data) => {
@@ -89,7 +95,11 @@ const Inventario = () => {
   useEffect(() => {
     if (rfid) {
       axios
-        .get(`${gatewayURL}/codigou/rfid/${rfid}`)
+        .get(`${gatewayURL}/codigou/rfid/${rfid}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((response) => {
           console.log(response);
           if (response.status === 200) {
@@ -135,7 +145,11 @@ const Inventario = () => {
   useEffect(() => {
     if (rfid && nombreEstudiante !== "") {
       axios
-        .get(`${gatewayURL}/prestamomaterialdeportivo/rfid/${rfid}`)
+        .get(`${gatewayURL}/prestamomaterialdeportivo/rfid/${rfid}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
         .then((response) => {
           console.log(response);
           let lastPrestamo = response.data[response.data.length - 1];
@@ -207,6 +221,7 @@ const Inventario = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       })
         .then((response) => {
@@ -234,6 +249,7 @@ const Inventario = () => {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
                 },
               })
                 .then((response) => {
@@ -335,6 +351,7 @@ const Inventario = () => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
         })
           .then((response) => {

@@ -16,6 +16,8 @@ const options = [
 ];
 
 const Search = () => {
+  let token = localStorage.getItem("token");
+
   const [selectedOption, setSelectedOption] = useState(null);
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -30,7 +32,12 @@ const Search = () => {
       const formattedStartDate = formatDates(startDate);
       const formattedEndDate = formatDates(endDate);
       fetch(
-        `${gatewayURL}/prestamoaudiovisual/${endpoint}?fechaInicial=${formattedStartDate}&fechaFinal=${formattedEndDate}`
+        `${gatewayURL}/prestamoaudiovisual/${endpoint}?fechaInicial=${formattedStartDate}&fechaFinal=${formattedEndDate}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       )
         .then((response) => response.json())
         .then((data) => setData(data))
@@ -38,17 +45,29 @@ const Search = () => {
     };
 
     if (selectedOption && selectedOption.value === "codigou") {
-      fetch(`${gatewayURL}/prestamoaudiovisual/codigou/${codigoUdec}`)
+      fetch(`${gatewayURL}/prestamoaudiovisual/codigou/${codigoUdec}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
         .then((response) => response.json())
         .then((data) => setData(data))
         .catch((error) => setError(error.toString()));
     } else if (selectedOption && selectedOption.value === "idRfid") {
-      fetch(`${gatewayURL}/prestamoaudiovisual/rfid/${idRfid}`)
+      fetch(`${gatewayURL}/prestamoaudiovisual/rfid/${idRfid}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
         .then((response) => response.json())
         .then((data) => setData(data))
         .catch((error) => setError(error.toString()));
     } else if (selectedOption && selectedOption.value === "devolucionempty") {
-      fetch(`${gatewayURL}/prestamoaudiovisual/devolucionempty`)
+      fetch(`${gatewayURL}/prestamoaudiovisual/devolucionempty`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
         .then((response) => response.json())
         .then((data) => setData(data))
         .catch((error) => setError(error.toString()));
@@ -57,12 +76,24 @@ const Search = () => {
     } else if (selectedOption && selectedOption.value === "fechadevolucion") {
       fetchWithDates("fechadevolucion");
     } else if (selectedOption && selectedOption.value === "nombreObjeto") {
-      fetch(`${gatewayURL}/prestamoaudiovisual/inventario/${nombreObjeto}`)
+      fetch(`${gatewayURL}/prestamoaudiovisual/inventario/${nombreObjeto}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
         .then((response) => response.json())
         .then((data) => setData(data))
         .catch((error) => setError(error.toString()));
     }
-  }, [selectedOption, codigoUdec, idRfid, nombreObjeto, startDate, endDate]);
+  }, [
+    selectedOption,
+    codigoUdec,
+    idRfid,
+    nombreObjeto,
+    startDate,
+    endDate,
+    token,
+  ]);
 
   const formatDates = (date) => {
     return date

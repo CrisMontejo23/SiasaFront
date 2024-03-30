@@ -5,6 +5,8 @@ import HeaderPrincipal from "../../template/header";
 import DatePicker from "react-datepicker";
 
 const LaboratorioReport = () => {
+  let token = localStorage.getItem("token");
+
   const [fechaInicial, setFechaInicial] = useState("");
   const [fechaFinal, setFechaFinal] = useState("");
 
@@ -19,7 +21,11 @@ const LaboratorioReport = () => {
     const url = `${gatewayURL}/report/laboratorio/download?fechaInicial=${fechaInicialFormat}&fechaFinal=${fechaFinalFormat}&tipo=pdf`;
 
     // Realizar la petición GET
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${token}`, // Incluye el token en los headers
+      },
+    });
 
     // Imprimir el estado de la respuesta
     switch (response.status) {

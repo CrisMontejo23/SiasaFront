@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { gatewayURL } from "../../../services/principal";
 
 const Codigou = () => {
+  let token = localStorage.getItem("token");
+
   const [codigou, setCodigou] = useState([]);
   const [allCodigou, setAllCodigou] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
@@ -22,7 +24,12 @@ const Codigou = () => {
 
   useEffect(() => {
     fetch(
-      `${gatewayURL}/codigou/page?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}`
+      `${gatewayURL}/codigou/page?pageNumber=${pageNumber}&pageSize=${pageSize}&sortBy=${sortBy}&sortOrder=${sortOrder}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
     )
       .then((response) => response.json())
       .then((data) => {
@@ -37,7 +44,7 @@ const Codigou = () => {
       .catch((error) => {
         console.log(error);
       });
-  }, [pageNumber, pageSize, sortBy, sortOrder]); // Este efecto se ejecutará cada vez que cambien estos valores
+  }, [pageNumber, pageSize, sortBy, sortOrder, token]); // Este efecto se ejecutará cada vez que cambien estos valores
 
   useEffect(() => {
     if (searchId === "") {

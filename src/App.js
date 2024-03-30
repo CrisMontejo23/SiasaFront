@@ -46,6 +46,9 @@ import BibliotecaReport from './components/reportes/biblioteca';
 import SalaReport from './components/reportes/sala';
 import LaboratorioReport from './components/reportes/laboratorio';
 
+import RootDashboard from './components/roles/root/dashboard';
+import RootUpdate from './components/roles/root/update';
+
 function App() {
   return (
     <React.Fragment>
@@ -86,7 +89,10 @@ function App() {
           <Route path="/prestamos/audioVisual/dashboard" element={<AudioDashboard />} />
           <Route path="/prestamos/audioVisual/search" element={<AudioSearch />} />
           <Route path="/prestamos/audioVisual/inventario/register" element={<AudioRegister />} />  
-          <Route path="/prestamos/audioVisual/inventario/update/:objectID" element={<AudioUpdate />} />           
+          <Route path="/prestamos/audioVisual/inventario/update/:objectID" element={<AudioUpdate />} />   
+
+          <Route path="/root/dashboard" element={<RootDashboard />} />        
+          <Route path="/root/update/:id" element={<RootUpdate />} />
         </Routes>
       </Router>
     </React.Fragment>

@@ -15,6 +15,8 @@ const options = [
 ];
 
 const Search = () => {
+  let token = localStorage.getItem("token");
+
   const [selectedOption, setSelectedOption] = useState(null);
   const [codigo, setCodigo] = useState("");
   const [startDate, setStartDate] = useState(new Date());
@@ -27,7 +29,12 @@ const Search = () => {
       const formattedStartDate = formatDates(startDate);
       const formattedEndDate = formatDates(endDate);
       fetch(
-        `${gatewayURL}/salacomputo/${endpoint}?fechaInicial=${formattedStartDate}&fechaFinal=${formattedEndDate}`
+        `${gatewayURL}/salacomputo/${endpoint}?fechaInicial=${formattedStartDate}&fechaFinal=${formattedEndDate}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       )
         .then((response) => response.json())
         .then((data) => setData(data))
@@ -38,7 +45,12 @@ const Search = () => {
       const formattedStartDate = formatDates(startDate);
       const formattedEndDate = formatDates(endDate);
       fetch(
-        `${gatewayURL}/salacomputo/${endpoint}?idCodigoU=${codigo}&fechaInicial=${formattedStartDate}&fechaFinal=${formattedEndDate}`
+        `${gatewayURL}/salacomputo/${endpoint}?idCodigoU=${codigo}&fechaInicial=${formattedStartDate}&fechaFinal=${formattedEndDate}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       )
         .then((response) => response.json())
         .then((data) => setData(data))
@@ -46,7 +58,11 @@ const Search = () => {
     };
 
     if (selectedOption && selectedOption.value === "codigo") {
-      fetch(`${gatewayURL}/salacomputo/codigou/${codigo}`)
+      fetch(`${gatewayURL}/salacomputo/codigou/${codigo}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
         .then((response) => response.json())
         .then((data) => setData(data))
         .catch((error) => setError(error.toString()));
@@ -62,7 +78,7 @@ const Search = () => {
     } else if (selectedOption && selectedOption.value === "codigoFechaSalida") {
       fetchWithDatesAndCode("idcodigouandfechasalida");
     }
-  }, [selectedOption, codigo, startDate, endDate]);
+  }, [selectedOption, codigo, startDate, endDate, token]);
 
   const formatDates = (date) => {
     return date

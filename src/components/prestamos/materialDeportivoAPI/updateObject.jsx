@@ -10,6 +10,8 @@ import soundOk from "../../../assetss/sounds/ok.mp3";
 import soundError from "../../../assetss/sounds/error.mp3";
 
 const UpdateObject = () => {
+  let token = localStorage.getItem("token");
+
   const location = useLocation();
   const audioOk = new Audio(soundOk);
   const audioError = new Audio(soundError);
@@ -46,6 +48,7 @@ const UpdateObject = () => {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
           },
           body: JSON.stringify(updatedData),
         }

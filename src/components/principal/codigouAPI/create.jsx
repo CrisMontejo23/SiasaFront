@@ -9,6 +9,8 @@ import soundOk from "../../../assetss/sounds/ok.mp3";
 import soundError from "../../../assetss/sounds/error.mp3";
 
 const Create = () => {
+  let token = localStorage.getItem("token");
+
   const [data, setData] = useState({
     idCodigoU: "",
     rfidDto: {
@@ -27,7 +29,11 @@ const Create = () => {
   const audioError = new Audio(soundError);
 
   useEffect(() => {
-    fetch(`${gatewayURL}/rfid/without`)
+    fetch(`${gatewayURL}/rfid/without`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
       .then((response) => response.json())
       .then((data) => {
         setData((prevData) => ({
@@ -36,7 +42,7 @@ const Create = () => {
         }));
       })
       .catch((error) => console.error(error));
-  }, []);
+  }, [token]);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -62,6 +68,7 @@ const Create = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(data),
     })

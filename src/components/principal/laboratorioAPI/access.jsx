@@ -10,6 +10,8 @@ import carnetImage from "../../../assetss/img/carnet.png";
 import BackgroundImage from "../../../assetss/img/background4.jpg";
 
 const IngresoLaboratorio = () => {
+  let token = localStorage.getItem("token");
+
   const [idRfid, setIdRfid] = useState("");
   const [status, setStatus] = useState("");
   const [name, setName] = useState("");
@@ -30,7 +32,7 @@ const IngresoLaboratorio = () => {
       // Intentar registrar una salida
       let response = await fetch(
         `${gatewayURL}/laboratorio/out/${event.target.value}`,
-        { method: "POST" }
+        { method: "POST", headers: { Authorization: `Bearer ${token}` } }
       );
 
       if (response.status === 201) {
@@ -64,7 +66,7 @@ const IngresoLaboratorio = () => {
         // Si no ha ingresado, registrar un ingreso
         response = await fetch(
           `${gatewayURL}/laboratorio/${event.target.value}`,
-          { method: "POST" }
+          { method: "POST", headers: { Authorization: `Bearer ${token}` } }
         );
         if (response.status === 201) {
           audioOk.play();

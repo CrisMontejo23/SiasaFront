@@ -13,6 +13,8 @@ const options = [
 ];
 
 const Search = () => {
+  let token = localStorage.getItem("token");
+
   const [selectedOption, setSelectedOption] = useState(null);
   const [codigo, setCodigo] = useState("");
   const [startDate, setStartDate] = useState(new Date());
@@ -22,7 +24,11 @@ const Search = () => {
 
   useEffect(() => {
     if (selectedOption && selectedOption.value === "codigo") {
-      fetch(`${gatewayURL}/campus/codigou/${codigo}`)
+      fetch(`${gatewayURL}/campus/codigou/${codigo}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
         .then((response) => response.json())
         .then((data) => setData(data))
         .catch((error) => setError(error.toString()));
@@ -48,7 +54,12 @@ const Search = () => {
         })
         .replace(/(\d{2})\/(\d{2})\/(\d{4}),\s/, "$3-$2-$1T");
       fetch(
-        `${gatewayURL}/campus/fechaingreso?fechaInicial=${formattedStartDate}&fechaFinal=${formattedEndDate}`
+        `${gatewayURL}/campus/fechaingreso?fechaInicial=${formattedStartDate}&fechaFinal=${formattedEndDate}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       )
         .then((response) => response.json())
         .then((data) => setData(data))
@@ -78,13 +89,18 @@ const Search = () => {
         })
         .replace(/(\d{2})\/(\d{2})\/(\d{4}),\s/, "$3-$2-$1T");
       fetch(
-        `${gatewayURL}/campus/idcodigouandfechaingreso?idCodigoU=${codigo}&fechaInicial=${formattedStartDate}&fechaFinal=${formattedEndDate}`
+        `${gatewayURL}/campus/idcodigouandfechaingreso?idCodigoU=${codigo}&fechaInicial=${formattedStartDate}&fechaFinal=${formattedEndDate}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       )
         .then((response) => response.json())
         .then((data) => setData(data))
         .catch((error) => setError(error.toString()));
     }
-  }, [selectedOption, codigo, startDate, endDate]);
+  }, [selectedOption, codigo, startDate, endDate, token]);
 
   return (
     <React.Fragment>

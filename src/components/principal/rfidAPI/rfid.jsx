@@ -8,6 +8,8 @@ import soundOk from "../../../assetss/sounds/ok.mp3";
 import soundError from "../../../assetss/sounds/error.mp3";
 
 const Rfid = () => {
+  let token = localStorage.getItem("token");
+
   const [rfid, setRfid] = useState("");
   const [rfidList, setRfidList] = useState([]);
   const [vinculados, setVinculados] = useState(true);
@@ -31,7 +33,11 @@ const Rfid = () => {
   const fetchRfidWithout = () => {
     let url = gatewayURL + "/rfid/without";
     axios
-      .get(url)
+      .get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         console.log(response);
         setRfidList(response.data);
@@ -71,6 +77,7 @@ const Rfid = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ idRfid: rfid }),
     })
@@ -135,7 +142,11 @@ const Rfid = () => {
   const fetchRfidList = () => {
     let url = `${gatewayURL}/rfid/page?pageNumber=${pageNumber}&pageSize=${pageSize}`;
     axios
-      .get(url)
+      .get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         console.log(response);
         setRfidList(response.data.content);
@@ -147,7 +158,7 @@ const Rfid = () => {
             setErrorMessage("");
           }, 2500);
         } else if (error.response && error.response.status === 500) {
-          setErrorMessage("Error interno del servidor.");          
+          setErrorMessage("Error interno del servidor.");
           setTimeout(() => {
             setErrorMessage("");
           }, 2500);
@@ -164,7 +175,11 @@ const Rfid = () => {
   const searchRfid = (rfid) => {
     let url = gatewayURL + "/rfid/" + rfid;
     axios
-      .get(url)
+      .get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
@@ -206,7 +221,11 @@ const Rfid = () => {
   const deleteRfid = (idRfid) => {
     let url = `${gatewayURL}/rfid/${idRfid}`;
     axios
-      .delete(url)
+      .delete(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((response) => {
         console.log(response);
         if (response.status === 200) {
@@ -220,7 +239,7 @@ const Rfid = () => {
           setErrorMessage("ID del RFID no registrado.");
           audioError.play();
           setTimeout(() => {
-            setErrorMessage("");            
+            setErrorMessage("");
           }, 2500);
         } else if (response.status === 409) {
           setErrorMessage("El ID del RFID tiene datos ligados.");

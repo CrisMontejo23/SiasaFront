@@ -10,6 +10,8 @@ import carnetImage from "../../../assetss/img/carnet.png";
 import BackgroundImage from "../../../assetss/img/background.jpg";
 
 const IngresoCampus = () => {
+  let token = localStorage.getItem("token");
+
   const [idRfid, setIdRfid] = useState("");
   const [status, setStatus] = useState(null);
   const [name, setName] = useState(null);
@@ -31,6 +33,9 @@ const IngresoCampus = () => {
         `${gatewayURL}/campus/${event.target.value}`,
         {
           method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
@@ -53,7 +58,7 @@ const IngresoCampus = () => {
         setIdRfid("");
         setTimeout(() => {
           setName(null);
-          setStatus(null);          
+          setStatus(null);
         }, 5000);
       } else if (response.status === 404) {
         setName(null);
@@ -62,7 +67,7 @@ const IngresoCampus = () => {
         setIdRfid("");
         setTimeout(() => {
           setName(null);
-          setStatus(null);          
+          setStatus(null);
         }, 5000);
       } else if (response.status === 500) {
         setName(null);
@@ -70,7 +75,7 @@ const IngresoCampus = () => {
         setIdRfid("");
         setTimeout(() => {
           setName(null);
-          setStatus(null);          
+          setStatus(null);
         }, 5000);
       }
     } catch (error) {
@@ -97,9 +102,9 @@ const IngresoCampus = () => {
         }
       }
     };
-    
+
     window.addEventListener("keydown", handleKeyDown);
-    
+
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
