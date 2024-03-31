@@ -18,7 +18,7 @@ const Codigou = () => {
   const navigate = useNavigate();
 
   const clickCodigou = (codigou) => {
-    console.log(codigou);
+    //console.log(codigou);
     navigate(`/codigou/update/${codigou}`);
   };
 

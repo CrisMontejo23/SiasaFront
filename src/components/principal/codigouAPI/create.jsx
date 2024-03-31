@@ -63,7 +63,7 @@ const Create = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     let url = `${gatewayURL}/codigou`;
-    console.log(data);
+    //console.log(data);
     fetch(url, {
       method: "POST",
       headers: {
@@ -91,7 +91,7 @@ const Create = () => {
         }
       })
       .then((data) => {
-        console.log(data);
+        //console.log(data);
         setErrorMessage("Usuario registrado exitosamente.");
         audioOk.play();
         setTimeout(() => {

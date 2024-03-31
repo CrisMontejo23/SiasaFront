@@ -41,7 +41,7 @@ const IngresoBiblioteca = () => {
 
       if (response.status === 201) {
         const data = await response.json();
-        console.log(data);
+        //console.log(data);
         setName(
           data.codigoUDto.primerNombre +
             " " +

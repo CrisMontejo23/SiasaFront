@@ -32,7 +32,7 @@ const RegisterObject = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     let url = `${gatewayURL}/materialdeportivo`;
-    console.log(data);
+    //console.log(data);
     fetch(url, {
       method: "POST",
       headers: {
@@ -56,7 +56,7 @@ const RegisterObject = () => {
         }
       })
       .then((data) => {
-        console.log(data);
+        //console.log(data);
         setErrorMessage("Objeto creado exitosamente.");
         audioOk.play();
         setTimeout(() => {

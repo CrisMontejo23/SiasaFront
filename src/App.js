@@ -48,7 +48,6 @@ import LaboratorioReport from './components/reportes/laboratorio';
 
 import RootDashboard from './components/roles/root/dashboard';
 import RootUpdate from './components/roles/root/update';
-import RootCreate from './components/roles/root/create';
 
 function App() {
   return (
@@ -94,7 +93,6 @@ function App() {
 
           <Route path="/root/dashboard" element={<RootDashboard />} />        
           <Route path="/root/update/:id" element={<RootUpdate />} />
-          <Route path="/root/create" element={<RootCreate />} />
         </Routes>
       </Router>
     </React.Fragment>

@@ -39,7 +39,7 @@ const Rfid = () => {
         },
       })
       .then((response) => {
-        console.log(response);
+        //console.log(response);
         setRfidList(response.data);
       })
       .catch((error) => {
@@ -107,7 +107,7 @@ const Rfid = () => {
         return response.json();
       })
       .then((rfid) => {
-        console.log(rfid);
+        //console.log(rfid);
         setErrorMessage("El carnet se registró exitosamente.");
         audioOk.play();
         setTimeout(() => {
@@ -148,7 +148,7 @@ const Rfid = () => {
         },
       })
       .then((response) => {
-        console.log(response);
+        //console.log(response);
         setRfidList(response.data.content);
       })
       .catch((error) => {
@@ -181,7 +181,7 @@ const Rfid = () => {
         },
       })
       .then((response) => {
-        console.log(response);
+        //console.log(response);
         if (response.status === 200) {
           setRfidList([response.data]); // Actualiza rfidList con la respuesta
           setErrorMessage("Datos encontrados exitosamente.");
@@ -227,7 +227,7 @@ const Rfid = () => {
         },
       })
       .then((response) => {
-        console.log(response);
+        //console.log(response);
         if (response.status === 200) {
           setErrorMessage("Registro de RFID eliminado exitosamente.");
           audioOk.play();

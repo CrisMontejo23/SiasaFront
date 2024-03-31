@@ -45,7 +45,7 @@ const Inventario = () => {
   const [shouldRegisterNewLoan, setShouldRegisterNewLoan] = useState(false);
 
   const clickObject = (objectData) => {
-    console.log(objectData);
+    //console.log(objectData);
     navigate(
       `/prestamos/materialDeportivo/inventario/update/${objectData.idMaterialDeportivo}`,
       { state: { objectData } }
@@ -101,14 +101,14 @@ const Inventario = () => {
           },
         })
         .then((response) => {
-          console.log(response);
+          //console.log(response);
           if (response.status === 200) {
-            //console.log("estudiante encontrado");
+            console.log("Estudiante encontrado");
             let data = response.data;
             let nombreEstudiante =
               data.primerNombre + " " + data.primerApellido;
             setNombreEstudiante(nombreEstudiante);
-            console.log(nombreEstudiante);
+            //console.log(nombreEstudiante);
           }
         })
         .catch((error) => {
@@ -151,21 +151,21 @@ const Inventario = () => {
           },
         })
         .then((response) => {
-          console.log(response);
+          //console.log(response);
           let lastPrestamo = response.data[response.data.length - 1];
           setLastPrestamo(lastPrestamo);
           //console.log("lastPrestamo", lastPrestamo);
 
           if (lastPrestamo.fechaDevolucion === null) {
             setShouldRegisterNewLoan(false);
-            //console.log("debe salir");
+            console.log("Debe salir");
             let idPrestamo = lastPrestamo.idMaterialDeportivo;
             let nombreObjetoUltimoPrestamo =
               lastPrestamo.inventarioMaterialDeportivoDTO.nombre;
             setNombreObjetoUltimoPrestamo(nombreObjetoUltimoPrestamo);
             setIdPrestamo(idPrestamo);
           } else {
-            //console.log("debe entrar");
+            console.log("Debe entrar");
             setShouldRegisterNewLoan(true);
             if (objetoSeleccionado) {
               let idInventarioMaterialDeportivo =
@@ -225,7 +225,7 @@ const Inventario = () => {
         },
       })
         .then((response) => {
-          console.log(response);
+          //console.log(response);
           if (response.status === 201) {
             setRegisterMessage(
               `Devolución de ${nombreObjetoUltimoPrestamo} registrado exitosamente.`
@@ -253,7 +253,7 @@ const Inventario = () => {
                 },
               })
                 .then((response) => {
-                  console.log(response.status);
+                  //console.log(response.status);
                   if (response.status === 201) {
                     setRegisterMessage(
                       `Prestamo de ${nombreObjetoPrestamo} creado exitosamente.`
@@ -355,7 +355,7 @@ const Inventario = () => {
           },
         })
           .then((response) => {
-            console.log(response);
+            //console.log(response);
             if (response.status === 201) {
               setRegisterMessage(
                 `Prestamo de ${nombreObjetoPrestamo} creado exitosamente.`

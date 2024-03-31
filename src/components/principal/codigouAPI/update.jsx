@@ -75,7 +75,7 @@ const Update = () => {
         }
       })
       .then((data) => {
-        console.log(data);
+        //console.log(data);
         setErrorMessage("Usuario actualizado exitosamente.");
         audioOk.play();
         setTimeout(() => {
@@ -104,7 +104,7 @@ const Update = () => {
         if (!response.ok) {
           throw new Error(response.status);
         }
-        console.log("Eliminado con éxito");
+        //console.log("Eliminado con éxito");
         setErrorMessage("Eliminación completa de registro exitosamente.");
         setTimeout(() => {
           navigate("/codigou");

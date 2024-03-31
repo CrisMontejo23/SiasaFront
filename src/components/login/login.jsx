@@ -60,7 +60,7 @@ function Login() {
       })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        //console.log(data);
         if (data.length > 0) {
           const role = data[0];
           //console.log(role);
