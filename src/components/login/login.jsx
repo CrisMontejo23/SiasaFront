@@ -60,40 +60,24 @@ function Login() {
       })
       .then((response) => response.json())
       .then((data) => {
-        //console.log(data);
-        if (data.length > 0) {
-          const role = data[0];
-          //console.log(role);
-          audioOk.play();
-          switch (role) {
-            case "ROOT":
-              navigate("/root/dashboard");
-              break;
-            case "ADMIN":
-              navigate("/rfid");
-              break;
-            case "COMPUTO":
-              navigate("/sala/access");
-              break;
-            case "BIBLIOTECA":
-              navigate("/biblioteca/access");
-              break;
-            case "CAMPUS":
-              navigate("/campus/access");
-              break;
-            case "LAB":
-              navigate("/laboratorio/access");
-              break;
-            case "BIENESTAR":
-              navigate("/prestamos/materialDeportivo/dashboard");
-              break;
-            default:
-              setError(true);
-              setErrorMsg("Error al iniciar sesión.");
-          }
+        audioOk.play();
+        if (data.includes("ROOT")) {
+          navigate("/root/dashboard");
+        } else if (data.includes("ADMIN")) {
+          navigate("/rfid");
+        } else if (data.includes("COMPUTO")) {
+          navigate("/sala/access");
+        } else if (data.includes("BIBLIOTECA")) {
+          navigate("/biblioteca/access");
+        } else if (data.includes("CAMPUS")) {
+          navigate("/campus/access");
+        } else if (data.includes("LAB")) {
+          navigate("/laboratorio/access");
+        } else if (data.includes("BIENESTAR")) {
+          navigate("/prestamos/materialDeportivo/dashboard");
         } else {
           setError(true);
-          setErrorMsg("No se encontraron roles para el usuario");
+          setErrorMsg("Error al iniciar sesión.");
         }
       })
       .catch((error) => {
