@@ -9,6 +9,8 @@ import soundOk from "../../../assetss/sounds/ok.mp3";
 import soundError from "../../../assetss/sounds/error.mp3";
 
 const RegisterObject = () => {
+  let token = localStorage.getItem("token");
+
   const audioOk = new Audio(soundOk);
   const audioError = new Audio(soundError);
 

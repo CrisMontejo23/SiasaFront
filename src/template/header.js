@@ -70,7 +70,13 @@ class HeaderPrincipal extends React.Component {
                   fontWeight: "bold",}}>
           <img src={logo} alt="Logo" className="navbar-brand logo small-logo ml-3" height={35}/>          
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Button className="ml-auto" variant="outline-light" onClick={this.handleLogout} style={{marginRight: "40px"}}>Cerrar sesión</Button>
+          <Button className="ml-auto" variant="outline-light" onClick={this.handleLogout} style={{marginRight: "40px"}}>Cerrar sesión <img
+                src={require("../assetss/img/exit.png")}
+                alt="Reload"
+                width="20"
+                height="20"
+                style={{ cursor: "pointer", marginLeft: "5px" }}
+              /></Button>
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="mr-auto">
               {links}

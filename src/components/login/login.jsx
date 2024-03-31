@@ -45,7 +45,7 @@ function Login() {
         return response.json();
       })
       .then((data) => {
-        console.log(data);
+        //console.log(data);
         if (data.token) {
           localStorage.setItem("token", data.token);
           return fetch(`${gatewayURL}/auth/getroles?token=${data.token}`);
@@ -63,7 +63,7 @@ function Login() {
         console.log(data);
         if (data.length > 0) {
           const role = data[0];
-          console.log(role);
+          //console.log(role);
           audioOk.play();
           switch (role) {
             case "ROOT":

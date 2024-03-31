@@ -14,6 +14,8 @@ import reload from "../../../assetss/img/reload.png";
 import updateLogo from "../../../assetss/img/system-update.png";
 
 const Inventario = () => {
+  let token = localStorage.getItem("token");
+
   const [update, setUpdate] = useState(false);
   const [objects, setObjects] = useState([]);
   const [allObjects, setAllObjects] = useState([]);
@@ -52,9 +54,7 @@ const Inventario = () => {
 
   const handleObjetoSeleccionado = (record) => {
     setObjetoSeleccionado(record);
-  };
-
-  let token = localStorage.getItem("token");
+  };  
 
   useEffect(() => {
     fetch(
@@ -415,7 +415,7 @@ const Inventario = () => {
         console.log("No hay objeto seleccionado");
       }
     }
-  };
+  };  
 
   return (
     <div>

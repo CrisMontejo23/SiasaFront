@@ -8,36 +8,43 @@ import HeaderPrincipal from "../../../template/header";
 import soundOk from "../../../assetss/sounds/ok.mp3";
 import soundError from "../../../assetss/sounds/error.mp3";
 
-const RegisterObject = () => {
-  let token = localStorage.getItem("token");
-  
-  const audioOk = new Audio(soundOk);
-  const audioError = new Audio(soundError);
-
+const Create = () => {
   const [data, setData] = useState({
-    idMaterialDeportivo: 0,
-    nombre: "",
-    descripcion: "",
-    disponible: 0,
+    name: "",
+    email: "",
+    password: "",
   });
-
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setData((prevData) => ({ ...prevData, [name]: value }));
-  };
 
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
+  const audioOk = new Audio(soundOk);
+  const audioError = new Audio(soundError);
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    if (name.includes(".")) {
+      const [parent, child] = name.split(".");
+      setData((prevData) => ({
+        ...prevData,
+        [parent]: {
+          ...prevData[parent],
+          [child]: value,
+        },
+      }));
+    } else {
+      setData((prevData) => ({ ...prevData, [name]: value }));
+    }
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    let url = `${gatewayURL}/materialdeportivo`;
-    console.log(data);
+    let url = `${gatewayURL}/auth/create`;
+    //console.log(data);
     fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(data),
     })
@@ -46,9 +53,13 @@ const RegisterObject = () => {
           case 201:
             return response.json();
           case 400:
-            throw new Error("Campos obligatorios requeridos.");
+            throw new Error(
+              "La contraseña no cumple con el requisito minimo (8 caracteres, una mayúscula, un número y un caracter especial)."
+            );
           case 409:
-            throw new Error("El nombre del objeto ya se encuentra registrado.");
+            throw new Error(
+              "Nombre de usuario o Email ya se encuentran en uso."
+            );
           case 500:
             throw new Error("Error interno del servidor.");
           default:
@@ -56,19 +67,19 @@ const RegisterObject = () => {
         }
       })
       .then((data) => {
-        console.log(data);
-        setErrorMessage("Objeto creado exitosamente.");
+        //console.log(data);
+        setErrorMessage("Usuario creado exitosamente.");
         audioOk.play();
         setTimeout(() => {
-          navigate("/prestamos/materialDeportivo/dashboard");
+          navigate("/root/dashboard");
         }, 2500);
       })
       .catch((error) => {
-        console.error(error);
         audioError.play();
-        setErrorMessage(error.message);
+        //console.error(error);
+        setErrorMessage(error.message); // Establecer el mensaje de error
       });
-  };
+  };  
 
   const clearField = (field) => {
     if (field.includes(".")) {
@@ -89,19 +100,6 @@ const RegisterObject = () => {
     <div style={{ backgroundColor: "white" }}>
       <React.Fragment>
         <HeaderPrincipal />
-        <br />
-        <p
-          className="text"
-          style={{
-            fontSize: "35px",
-            fontFamily: "sans-serif",
-            fontWeight: "bold",
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          REGISTRO DE UN NUEVO MATERIAL DEPORTIVO
-        </p>
         <br />
         {errorMessage && (
           <div
@@ -125,7 +123,10 @@ const RegisterObject = () => {
             height: "auto",
           }}
         >
-          <form onSubmit={handleSubmit}>
+          <form
+            onSubmit={handleSubmit}
+            style={{ width: "50%", marginLeft: "25%" }}
+          >
             <div className="row">
               <div className="col">
                 <label
@@ -138,11 +139,11 @@ const RegisterObject = () => {
                 </label>
                 <input
                   type="text"
-                  name="nombre"
-                  value={data?.nombre || ""}
+                  name="name"
+                  value={data?.name || ""}
                   onChange={handleInputChange}
                   className="form-control"
-                  placeholder="Nombre Objeto"
+                  placeholder="Nombre"
                   style={{
                     textTransform: "uppercase",
                     boxShadow: "3px 3px 10px rgba(0, 0, 0, 1)",
@@ -151,44 +152,11 @@ const RegisterObject = () => {
                 <button
                   type="button"
                   className="btn btn-outline-secondary"
+                  onClick={() => clearField("name")}
                   style={{
                     border: "none",
                     fontWeight: "bold",
                   }}
-                  onClick={() => clearField("nombre")}
-                >
-                  x
-                </button>
-              </div>
-              <div className="col">
-                <label
-                  className="col-md-2 control-label"
-                  style={{
-                    fontWeight: "bold",
-                  }}
-                >
-                  Descripción*
-                </label>
-                <input
-                  type="text"
-                  name="descripcion"
-                  value={data?.descripcion || ""}
-                  onChange={handleInputChange}
-                  className="form-control"
-                  placeholder="Descripción del objeto"
-                  style={{
-                    textTransform: "uppercase",
-                    boxShadow: "3px 3px 10px rgba(0, 0, 0, 1)",
-                  }}
-                />
-                <button
-                  type="button"
-                  className="btn btn-outline-secondary"
-                  style={{
-                    border: "none",
-                    fontWeight: "bold",
-                  }}
-                  onClick={() => clearField("description")}
                 >
                   x
                 </button>
@@ -200,74 +168,129 @@ const RegisterObject = () => {
                   className="col-md-2 control-label"
                   style={{
                     fontWeight: "bold",
+                    width: "auto",
                   }}
                 >
-                  Disponibles*
+                  Correo Electrónico*
                 </label>
                 <input
-                  type="number"
-                  name="disponible"
-                  value={data?.disponible || ""}
+                  type="text"
+                  name="email"
+                  value={data?.email || ""}
                   onChange={handleInputChange}
                   className="form-control"
-                  placeholder="Unidades Disponibles"
-                  min="1"
+                  placeholder="EMAIL"
                   style={{
-                    textTransform: "uppercase",
                     boxShadow: "3px 3px 10px rgba(0, 0, 0, 1)",
-                    width: "330px",
-                    height: "60px",
-                    marginLeft: "4px",
-                    textAlign: "center",
                   }}
                 />
-              </div>
-              <div className="col">
-                <div
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary"
                   style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    marginTop: "33px",
-                    marginRight: "53px",
+                    border: "none",
+                    fontWeight: "bold",
+                  }}
+                  onClick={() => clearField("password")}
+                >
+                  x
+                </button>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col">
+                <label
+                  className="col-md-2 control-label"
+                  style={{
+                    fontWeight: "bold",
+                    width: "auto",
                   }}
                 >
-                  <button
-                    type="submit"
-                    className="btn btn-success"
-                    style={{
-                      margin: "5px",
-                      width: "100px",
-                      boxShadow: "3px 3px 10px rgba(0, 0, 0, 1)",
-                      fontWeight: "bold",
-                    }}
-                    onClick={() => {
-                      setErrorMessage("");
-                    }}
-                  >
-                    Registrar
-                  </button>
-                  <a
-                    type="submit"
-                    className="btn btn-dark"
-                    href="/prestamos/materialDeportivo/dashboard"
-                    style={{
-                      margin: "5px",
-                      width: "100px",
-                      boxShadow: "3px 3px 10px rgba(0, 0, 0, 1)",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Salir
-                  </a>
-                </div>
+                  Contraseña*
+                </label>
+                <input
+                  type="text"
+                  name="password"
+                  value={data?.password || ""}
+                  onChange={handleInputChange}
+                  className="form-control"
+                  placeholder="Contraseña"
+                  style={{                    
+                    boxShadow: "3px 3px 10px rgba(0, 0, 0, 1)",
+                  }}
+                />
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary"
+                  style={{
+                    border: "none",
+                    fontWeight: "bold",
+                  }}
+                  onClick={() => clearField("password")}
+                >
+                  x
+                </button>
               </div>
             </div>
             <br />
           </form>
+          <div
+            style={{
+              width: "50%",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "flex-end",
+              marginRight: "25%",
+            }}
+          >
+            <button
+              type="submit"
+              className="btn btn-success"
+              style={{
+                margin: "5px",
+                width: "130px",
+                boxShadow: "3px 3px 10px rgba(0, 0, 0, 1)",
+                fontWeight: "bold",
+              }}
+              onClick={(event) => {
+                handleSubmit(event);
+                setErrorMessage("");
+              }}
+            >
+              Crear
+              <img
+                src={require("../../../assetss/img/add-user.png")}
+                alt="Reload"
+                width="25"
+                height="25"
+                style={{ cursor: "pointer", marginLeft: "5px" }}
+              />
+            </button>
+            <a
+              type="submit"
+              className="btn btn-dark"
+              href="/root/dashboard"
+              style={{
+                margin: "5px",
+                width: "130px",
+                boxShadow: "3px 3px 10px rgba(0, 0, 0, 1)",
+                fontWeight: "bold",
+              }}
+            >
+              Regresar
+              <img
+                src={require("../../../assetss/img/turn-back.png")}
+                alt="Reload"
+                width="25"
+                height="25"
+                style={{ cursor: "pointer", marginLeft: "5px" }}
+              />
+            </a>
+          </div>
         </div>
       </React.Fragment>
     </div>
   );
 };
 
-export default RegisterObject;
+export default Create;

@@ -11,11 +11,8 @@ const RootDashboard = () => {
   const navigate = useNavigate();
 
   const clickObject = (objectData) => {
-    console.log(objectData);
-    navigate(
-      `/root/update/${objectData.id}`,
-      { state: { objectData } }
-    );
+    //console.log(objectData);
+    navigate(`/root/update/${objectData.id}`, { state: { objectData } });
   };
 
   useEffect(() => {
@@ -60,31 +57,29 @@ const RootDashboard = () => {
               alignItems: "center",
             }}
           >
-            <button
+            <a
               type="button"
-              className="btn btn-danger align-middle"
+              className="btn btn-success align-middle"
               onClick={() => setUpdate(!update)}
               style={{
-                height: "25px",
                 justifyContent: "center",
-                width: "25px",
-                display: "flex",
                 alignItems: "center",
                 textAlign: "center",
-                border: "none",
-                background: "none",
-                padding: "0",
+                boxShadow: "3px 3px 10px rgba(0, 0, 0, 1)",
+                fontWeight: "bold",
+                maxWidth: "150px",
                 marginRight: "50px",
               }}
             >
+              Recargar
               <img
                 src={require("../../../assetss/img/reload.png")}
-                alt="Delete"
+                alt="Reload"
                 width="25"
                 height="25"
-                style={{ cursor: "pointer" }}
+                style={{ cursor: "pointer", marginLeft: "5px" }}
               />
-            </button>
+            </a>
             <p
               className="text"
               style={{
@@ -95,6 +90,29 @@ const RootDashboard = () => {
             >
               DASHBOARD ROOT
             </p>
+            <a
+              type="button"
+              className="btn btn-success align-middle"
+              href="/root/create"
+              style={{
+                justifyContent: "center",
+                alignItems: "center",
+                textAlign: "center",
+                boxShadow: "3px 3px 10px rgba(0, 0, 0, 1)",
+                fontWeight: "bold",
+                maxWidth: "180px",
+                marginLeft: "50px",
+              }}
+            >
+              Crear Usuario
+              <img
+                src={require("../../../assetss/img/add-user.png")}
+                alt="Reload"
+                width="25"
+                height="25"
+                style={{ cursor: "pointer", marginLeft: "5px" }}
+              />
+            </a>
           </div>
           <br />
           <div
