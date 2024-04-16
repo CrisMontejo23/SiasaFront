@@ -196,18 +196,53 @@ const Search = () => {
           />
         )}
         {selectedOption && selectedOption.value === "idRfid" && (
-          <input
-            type="text"
-            value={idRfid}
-            onChange={(e) => setIdRfid(e.target.value)}
-            placeholder="ID RFID"
-            style={{
-              width: "150px",
-              height: "45px",
-              border: "1px solid black",
-              margin: "10px",
-            }}
-          />
+          <form className="form-inline justify-content-center">
+            <div
+              className="form-group"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginLeft: "15px",
+              }}
+            >
+              <input
+                type="text"
+                value={idRfid}
+                onChange={(event) => {
+                  // Solo actualiza el valor si el evento es un pegado
+                  if (event.nativeEvent.inputType === "insertFromPaste") {
+                    setIdRfid(event.target.value);
+                  }
+                }}
+                onKeyPress={(event) => {
+                  // Previene la entrada de texto a menos que sea un pegado
+                  if (!(event.ctrlKey && event.key === "v")) {
+                    event.preventDefault();
+                  }
+                }}
+                placeholder="ACERQUE EL CARNET"
+                style={{
+                  width: "250px",
+                  height: "45px",
+                  border: "1px solid black",
+                  margin: "10px",
+                }}
+              />
+              <button
+                type="button"
+                className="btn btn-outline-secondary"
+                onClick={() => {
+                  setIdRfid("");
+                }}
+                style={{
+                  border: "none",
+                  fontWeight: "bold",
+                }}
+              >
+                x
+              </button>
+            </div>
+          </form>
         )}
         {selectedOption && selectedOption.value === "nombreObjeto" && (
           <input

@@ -76,7 +76,7 @@ const Inventario = () => {
         }
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       });
   }, [pageNumber, pageSize, sortBy, sortOrder, update]);
 
@@ -103,7 +103,7 @@ const Inventario = () => {
         .then((response) => {
           //console.log(response);
           if (response.status === 200) {
-            console.log("Estudiante encontrado");
+            //console.log("Estudiante encontrado");
             let data = response.data;
             let nombreEstudiante =
               data.primerNombre + " " + data.primerApellido;
@@ -112,7 +112,7 @@ const Inventario = () => {
           }
         })
         .catch((error) => {
-          console.log(error);
+          //console.log(error);
           if (error.response && error.response.status === 400) {
             setRegisterMessage("El ID de RFID no existe.");
             audioError.play();
@@ -158,14 +158,14 @@ const Inventario = () => {
 
           if (lastPrestamo.fechaDevolucion === null) {
             setShouldRegisterNewLoan(false);
-            console.log("Debe salir");
+            //console.log("Debe salir");
             let idPrestamo = lastPrestamo.idMaterialDeportivo;
             let nombreObjetoUltimoPrestamo =
               lastPrestamo.inventarioMaterialDeportivoDTO.nombre;
             setNombreObjetoUltimoPrestamo(nombreObjetoUltimoPrestamo);
             setIdPrestamo(idPrestamo);
           } else {
-            console.log("Debe entrar");
+            //console.log("Debe entrar");
             setShouldRegisterNewLoan(true);
             if (objetoSeleccionado) {
               let idInventarioMaterialDeportivo =
@@ -180,16 +180,16 @@ const Inventario = () => {
           }
         })
         .catch((error) => {
-          console.log(error);
+          //console.log(error);
           if (
             error.response &&
-            error.response.status === 404 &&
+            (error.response.status === 404 || error.response.status === 500) &&
             nombreEstudiante !== ""
           ) {
             setShouldRegisterNewLoan(true);
-            console.log(
-              "No se registran prestamos al usuario, debe ingresar uno nuevo"
-            );
+            //console.log(
+            // "No se registran prestamos al usuario, debe ingresar uno nuevo"
+            //);
             if (objetoSeleccionado) {
               let idInventarioMaterialDeportivo =
                 objetoSeleccionado.idMaterialDeportivo;
@@ -225,7 +225,7 @@ const Inventario = () => {
         },
       })
         .then((response) => {
-          //console.log(response);
+          console.log(response);
           if (response.status === 201) {
             setRegisterMessage(
               `Devolución de ${nombreObjetoUltimoPrestamo} registrado exitosamente.`
@@ -240,11 +240,10 @@ const Inventario = () => {
             }, 2500);
           } else if (response.status === 400) {
             if (objetoSeleccionado) {
-              let urlIn = `${gatewayURL}/prestamomaterialdeportivo/in?idInventarioMaterialDeportivo=${idMaterialDeportivo}&idRfid=${encodeURIComponent(
-                rfid
-              )}&nota=${encodeURIComponent(
-                observaciones
-              )}&cantidad=${cantidad}`;
+              console.log(rfid);
+              let formattedRfid = `${rfid}`;
+              console.log(formattedRfid);
+              let urlIn = `http://localhost:8487/prestamomaterialdeportivo/in?idInventarioMaterialDeportivo=${idMaterialDeportivo}&idRfid=${formattedRfid}&nota=${observaciones}&cantidad=${cantidad}`;
               fetch(urlIn, {
                 method: "POST",
                 headers: {
@@ -253,7 +252,7 @@ const Inventario = () => {
                 },
               })
                 .then((response) => {
-                  //console.log(response.status);
+                  console.log(response.status);
                   if (response.status === 201) {
                     setRegisterMessage(
                       `Prestamo de ${nombreObjetoPrestamo} creado exitosamente.`
@@ -355,7 +354,7 @@ const Inventario = () => {
           },
         })
           .then((response) => {
-            //console.log(response);
+            console.log(response);
             if (response.status === 201) {
               setRegisterMessage(
                 `Prestamo de ${nombreObjetoPrestamo} creado exitosamente.`

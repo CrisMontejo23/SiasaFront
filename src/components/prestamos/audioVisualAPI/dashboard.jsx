@@ -54,7 +54,7 @@ const Inventario = () => {
 
   const handleObjetoSeleccionado = (record) => {
     setObjetoSeleccionado(record);
-  };  
+  };
 
   useEffect(() => {
     fetch(
@@ -76,7 +76,7 @@ const Inventario = () => {
         }
       })
       .catch((error) => {
-        console.log(error);
+        //console.log(error);
       });
   }, [pageNumber, pageSize, sortBy, sortOrder, update]);
 
@@ -103,7 +103,7 @@ const Inventario = () => {
         .then((response) => {
           //console.log(response);
           if (response.status === 200) {
-            console.log("Estudiante encontrado");
+            //console.log("Estudiante encontrado");
             let data = response.data;
             let nombreEstudiante =
               data.primerNombre + " " + data.primerApellido;
@@ -112,7 +112,7 @@ const Inventario = () => {
           }
         })
         .catch((error) => {
-          console.log(error);
+          //console.log(error);
           if (error.response && error.response.status === 400) {
             setRegisterMessage("El ID de RFID no existe.");
             audioError.play();
@@ -143,6 +143,7 @@ const Inventario = () => {
   }, [rfid, nombreEstudiante]);
 
   useEffect(() => {
+    //console.log(token);
     if (rfid && nombreEstudiante !== "") {
       axios
         .get(`${gatewayURL}/prestamoaudiovisual/rfid/${rfid}`, {
@@ -157,14 +158,14 @@ const Inventario = () => {
           //console.log("lastPrestamo", lastPrestamo);
           if (lastPrestamo.fechaDevolucion === null) {
             setShouldRegisterNewLoan(false);
-            console.log("Debe salir");
+            //console.log("Debe salir");
             let idPrestamo = lastPrestamo.idAudioVisual;
             let nombreObjetoUltimoPrestamo =
               lastPrestamo.inventarioAudioVisualDTO.nombre;
             setNombreObjetoUltimoPrestamo(nombreObjetoUltimoPrestamo);
             setIdPrestamo(idPrestamo);
           } else {
-            console.log("Debe entrar");
+            //console.log("Debe entrar");
             setShouldRegisterNewLoan(true);
             if (objetoSeleccionado) {
               let idInventarioAudioVisual = objetoSeleccionado.idAudioVisual;
@@ -178,16 +179,16 @@ const Inventario = () => {
           }
         })
         .catch((error) => {
-          console.log(error);
+          //console.log(error);
           if (
             error.response &&
-            error.response.status === 404 &&
+            (error.response.status === 404 || error.response.status === 500) &&
             nombreEstudiante !== ""
           ) {
             setShouldRegisterNewLoan(true);
-            console.log(
-              "No se registran prestamos al usuario, debe ingresar uno nuevo"
-            );
+            //console.log(
+            //  "No se registran prestamos al usuario, debe ingresar uno nuevo"
+            //);
             if (objetoSeleccionado) {
               let idInventarioAudioVisual = objetoSeleccionado.idAudioVisual;
               let nombreObjetoPrestamo = objetoSeleccionado.nombre;
@@ -310,7 +311,7 @@ const Inventario = () => {
                 })
                 .catch((error) => console.error("Error:", error));
             } else {
-              console.log("No hay objeto seleccionado");
+              //console.log("No hay objeto seleccionado");
             }
           } else if (response.status === 404) {
             setRegisterMessage(
@@ -412,10 +413,10 @@ const Inventario = () => {
           })
           .catch((error) => console.error("Error:", error));
       } else {
-        console.log("No hay objeto seleccionado");
+        //console.log("No hay objeto seleccionado");
       }
     }
-  };  
+  };
 
   return (
     <div>
@@ -468,7 +469,7 @@ const Inventario = () => {
                   <input
                     type="text"
                     className="form-control mr-2"
-                    id="exampleInputPassword1"
+                    id="exampleInputPassword2"
                     placeholder="nombre"
                     style={{
                       textTransform: "uppercase",
