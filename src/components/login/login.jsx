@@ -2,16 +2,20 @@ import React, { useState } from "react";
 import "../../assetss/css/login/login.css";
 import logo from "../../assetss/img/logo.png";
 import { gatewayURL } from "../../services/principal";
-import bgImage from "../../assetss/img/background4.jpg";
 import { useNavigate } from "react-router-dom";
 
 import soundOk from "../../assetss/sounds/ok.mp3";
 import soundError from "../../assetss/sounds/error.mp3";
 
+import bgImage from "../../assetss/img/background4.jpg";
+import showIcon from "../../assetss/img/show.png";
+import hideIcon from "../../assetss/img/hide.png";
+
 function Login() {
   const [form, setForm] = useState({ user: "", password: "" });
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
 
   const audioOk = new Audio(soundOk);
@@ -39,6 +43,19 @@ function Login() {
       body: JSON.stringify(data),
     })
       .then((response) => {
+        if (response.status === 401) {
+          setError(true);
+          setErrorMsg("Usuario o contraseña incorrectos.");
+          setTimeout(() => {
+            setError(false);
+          }, 2500);
+        } else if (response.status === 500) {
+          setError(true);
+          setErrorMsg("Error en el servidor.");
+          setTimeout(() => {
+            setError(false);
+          }, 2500);
+        }
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -54,7 +71,6 @@ function Login() {
           setErrorMsg("Error en la autenticación");
           setTimeout(() => {
             setError(false);
-            setForm({ user: "", password: "" });
           }, 2500);
         }
       })
@@ -84,12 +100,14 @@ function Login() {
         console.log(error);
         setError(true);
         audioError.play();
-        setErrorMsg("Error al iniciar sesión.");
         setTimeout(() => {
           setError(false);
-          setForm({ user: "", password: "" });
         }, 2500);
       });
+  };
+
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -118,14 +136,40 @@ function Login() {
                 onChange={manejadorChange}
                 value={form.user}
               />
-              <input
-                type="password"
-                className="fadeIn third"
-                name="password"
-                placeholder="Contraseña"
-                onChange={manejadorChange}
-                value={form.password}
-              />
+              <div style={{ position: "relative" }}>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  className="fadeIn third"
+                  name="password"
+                  placeholder="Contraseña"
+                  onChange={manejadorChange}
+                  value={form.password}
+                  style={{ paddingRight: "40px" }}
+                />
+                <button
+                  type="button"
+                  onClick={togglePasswordVisibility}
+                  style={{
+                    position: "absolute",
+                    right: "10px",
+                    top: "50%",
+                    transform: "translateY(-50%)",
+                    backgroundColor: "transparent",
+                    border: "none",
+                    cursor: "pointer",
+                  }}
+                >
+                  <img
+                    src={showPassword ? hideIcon : showIcon}
+                    alt={showPassword ? "Ocultar" : "Mostrar"}
+                    style={{
+                      width: "30px",
+                      height: "30px",
+                      marginRight: "30px",
+                    }} // Ajusta el tamaño de la imagen
+                  />
+                </button>
+              </div>
               <input
                 type="submit"
                 className="fadeIn fourth"

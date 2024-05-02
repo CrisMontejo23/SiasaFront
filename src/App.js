@@ -32,11 +32,13 @@ import LaboratorioAccess from './components/principal/laboratorioAPI/access';
 import LaboratorioSearch from './components/principal/laboratorioAPI/search';
 
 import MaterialSearch from './components/prestamos/materialDeportivoAPI/search';
+import MaterialAdminSerch from './components/prestamos/materialDeportivoAPI/adminSearch';
 import MaterialRegister from './components/prestamos/materialDeportivoAPI/registerObject';
 import MaterialUpdate from './components/prestamos/materialDeportivoAPI/updateObject';
 import MaterialDashboard from './components/prestamos/materialDeportivoAPI/dashboard';
 
 import AudioSearch from './components/prestamos/audioVisualAPI/search';
+import AudioAdminSerch from './components/prestamos/audioVisualAPI/adminSearch';
 import AudioRegister from './components/prestamos/audioVisualAPI/registerObject';
 import AudioUpdate from './components/prestamos/audioVisualAPI/updateObject';
 import AudioDashboard from './components/prestamos/audioVisualAPI/dashboard';
@@ -84,11 +86,13 @@ function App() {
 
           <Route path="/prestamos/materialDeportivo/dashboard" element={<MaterialDashboard />} />
           <Route path="/prestamos/materialDeportivo/search" element={<MaterialSearch />} />
+          <Route path="/prestamos/materialDeportivo/adminSearch" element={<MaterialAdminSerch />} />
           <Route path="/prestamos/materialDeportivo/inventario/register" element={<MaterialRegister />} />  
           <Route path="/prestamos/materialDeportivo/inventario/update/:objectID" element={<MaterialUpdate />} /> 
 
           <Route path="/prestamos/audioVisual/dashboard" element={<AudioDashboard />} />
           <Route path="/prestamos/audioVisual/search" element={<AudioSearch />} />
+          <Route path="/prestamos/audioVisual/adminSearch" element={<AudioAdminSerch />} />
           <Route path="/prestamos/audioVisual/inventario/register" element={<AudioRegister />} />  
           <Route path="/prestamos/audioVisual/inventario/update/:objectID" element={<AudioUpdate />} />   
 

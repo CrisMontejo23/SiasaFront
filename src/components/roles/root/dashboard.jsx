@@ -2,17 +2,61 @@ import React, { useState, useEffect } from "react";
 import { gatewayURL } from "../../../services/principal";
 import HeaderPrincipal from "../../../template/header";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import updateLogo from "../../../assetss/img/system-update.png";
+import deleteLogo from "../../../assetss/img/delete.png";
+
+import soundOk from "../../../assetss/sounds/ok.mp3";
+import soundError from "../../../assetss/sounds/error.mp3";
 
 const RootDashboard = () => {
   const [data, setData] = useState([]);
   const [update, setUpdate] = useState(false);
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const audioOk = new Audio(soundOk);
+  const audioError = new Audio(soundError);
 
   const clickObject = (objectData) => {
     //console.log(objectData);
     navigate(`/root/update/${objectData.id}`, { state: { objectData } });
+  };
+
+  const deleteUser = (objectData) => {
+    let url = `${gatewayURL}/admin/deleteuser/${objectData.id}`;
+    let token = localStorage.getItem("token");
+    axios
+      .delete(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        if (response.status === 200 || response.status === 204) {
+          setErrorMessage("Usuario eliminado exitosamente.");
+          audioOk.play();
+          setUpdate(!update); // Actualizar la lista de usuarios
+        } else {
+          setErrorMessage("Error inesperado al eliminar el usuario.");
+          audioError.play();
+        }
+        setTimeout(() => {
+          setErrorMessage("");
+        }, 2500);
+      })
+      .catch((error) => {
+        if (error.response && error.response.status === 404) {
+          setErrorMessage("Usuario no encontrado.");
+        } else {
+          setErrorMessage("Error inesperado al eliminar el usuario.");
+        }
+        audioError.play();
+        setTimeout(() => {
+          setErrorMessage("");
+        }, 2500);
+      });
   };
 
   useEffect(() => {
@@ -115,9 +159,27 @@ const RootDashboard = () => {
             </a>
           </div>
           <br />
+          {errorMessage && (
+            <div
+              className={`alert text-center ${
+                errorMessage.includes("exitosamente")
+                  ? "alert-success"
+                  : "alert-danger"
+              }`}
+              role="alert"
+              style={{
+                width: "350px",
+                margin: "0 auto",
+                boxShadow: "3px 3px 10px rgba(0, 0, 0, 1)",
+              }}
+            >
+              {errorMessage}
+            </div>
+          )}
+          <br />
           <div
             className="container"
-            style={{ maxWidth: "auto", overflowY: "auto", height: "auto" }}
+            style={{ maxWidth: "1230px", overflowY: "auto", height: "auto" }}
           >
             <table
               className="table table-striped"
@@ -205,7 +267,38 @@ const RootDashboard = () => {
                             textAlign: "center",
                           }}
                         >
-                          {item.roles.join(", ")}
+                          {item.roles}
+                        </td>
+                        <td
+                          style={{
+                            width: "42px",
+                            border: "1px solid black",
+                          }}
+                        >
+                          <button
+                            type="button"
+                            className="btn btn-danger align-middle"
+                            style={{
+                              height: "25px",
+                              justifyContent: "center",
+                              width: "25px",
+                              display: "flex",
+                              alignItems: "center",
+                              textAlign: "center",
+                              border: "none",
+                              background: "none",
+                              padding: "0",
+                            }}
+                            onClick={() => deleteUser(item)}
+                          >
+                            <img
+                              src={deleteLogo}
+                              alt="Delete"
+                              width="25"
+                              height="25"
+                              style={{ cursor: "pointer" }}
+                            />
+                          </button>
                         </td>
                         <td
                           style={{

@@ -262,7 +262,7 @@ const Rfid = () => {
             setErrorMessage("");
           }, 2500);
         }
-        console.log(error);
+        //console.log(error);
       });
   };
 

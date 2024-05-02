@@ -49,8 +49,8 @@ class HeaderPrincipal extends React.Component {
           <Nav.Link href="/sala/dashboard" className="text-white">Salas de Cómputo</Nav.Link>
           <Nav.Link href="/laboratorio/dashboard" className="text-white">Laboratorios</Nav.Link>                                              
           <NavDropdown title={<span className="text-white">Prestamos</span>} id="basic-nav-dropdown">
-            <NavDropdown.Item href="/prestamos/materialDeportivo/dashboard">Material Deportivo</NavDropdown.Item>
-            <NavDropdown.Item href="/prestamos/audioVisual/dashboard">Audio Visual</NavDropdown.Item>
+            <NavDropdown.Item href="/prestamos/materialDeportivo/adminSearch">Material Deportivo</NavDropdown.Item>
+            <NavDropdown.Item href="/prestamos/audioVisual/adminSearch">Audio Visual</NavDropdown.Item>
           </NavDropdown>
         </>
       );

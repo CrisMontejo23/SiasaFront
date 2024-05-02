@@ -143,9 +143,8 @@ const Create = () => {
                   value={data?.name || ""}
                   onChange={handleInputChange}
                   className="form-control"
-                  placeholder="Nombre"
-                  style={{
-                    textTransform: "uppercase",
+                  placeholder="NOMBRE"
+                  style={{                    
                     boxShadow: "3px 3px 10px rgba(0, 0, 0, 1)",
                   }}
                 />
@@ -191,7 +190,7 @@ const Create = () => {
                     border: "none",
                     fontWeight: "bold",
                   }}
-                  onClick={() => clearField("password")}
+                  onClick={() => clearField("email")}
                 >
                   x
                 </button>
@@ -214,7 +213,7 @@ const Create = () => {
                   value={data?.password || ""}
                   onChange={handleInputChange}
                   className="form-control"
-                  placeholder="Contraseña"
+                  placeholder="CONTRASEÑA"
                   style={{                    
                     boxShadow: "3px 3px 10px rgba(0, 0, 0, 1)",
                   }}
