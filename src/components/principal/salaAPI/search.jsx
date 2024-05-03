@@ -8,6 +8,7 @@ import "../../../assetss/css/App.css";
 
 const options = [
   { value: "codigo", label: "Codigo" },
+  { value: "idRfid", label: "ID Rfid" },
   { value: "fechaIngreso", label: "Fecha de Ingreso" },
   { value: "fechaSalida", label: "Fecha de Salida" },
   { value: "codigoFechaIngreso", label: "Codigo y Fecha de Ingreso" },
@@ -19,6 +20,7 @@ const Search = () => {
 
   const [selectedOption, setSelectedOption] = useState(null);
   const [codigo, setCodigo] = useState("");
+  const [idRfid, setIdRfid] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [data, setData] = useState(null);
@@ -66,6 +68,15 @@ const Search = () => {
         .then((response) => response.json())
         .then((data) => setData(data))
         .catch((error) => setError(error.toString()));
+    } else if (selectedOption && selectedOption.value === "idRfid") {
+      fetch(`${gatewayURL}/salacomputo/codigou/idrfid/${idRfid}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((data) => setData(data))
+        .catch((error) => setError(error.toString()));
     } else if (selectedOption && selectedOption.value === "fechaIngreso") {
       fetchWithDates("fechaingreso");
     } else if (selectedOption && selectedOption.value === "fechaSalida") {
@@ -78,7 +89,7 @@ const Search = () => {
     } else if (selectedOption && selectedOption.value === "codigoFechaSalida") {
       fetchWithDatesAndCode("idcodigouandfechasalida");
     }
-  }, [selectedOption, codigo, startDate, endDate, token]);
+  }, [selectedOption, codigo, startDate, endDate, token, idRfid]);
 
   const formatDates = (date) => {
     return date
@@ -171,6 +182,7 @@ const Search = () => {
               type="text"
               value={codigo}
               onChange={(e) => setCodigo(e.target.value)}
+              placeholder="CODIGO U"
               style={{
                 width: "150px",
                 height: "45px",
@@ -179,6 +191,55 @@ const Search = () => {
               }}
             />
           )}
+        {selectedOption && selectedOption.value === "idRfid" && (
+          <form className="form-inline justify-content-center">
+            <div
+              className="form-group"
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginLeft: "15px",
+              }}
+            >
+              <input
+                type="text"
+                value={idRfid}
+                onChange={(event) => {
+                  // Solo actualiza el valor si el evento es un pegado
+                  if (event.nativeEvent.inputType === "insertFromPaste") {
+                    setIdRfid(event.target.value);
+                  }
+                }}
+                onKeyPress={(event) => {
+                  // Previene la entrada de texto a menos que sea un pegado
+                  if (!(event.ctrlKey && event.key === "v")) {
+                    event.preventDefault();
+                  }
+                }}
+                placeholder="ACERQUE EL CARNET"
+                style={{
+                  width: "250px",
+                  height: "45px",
+                  border: "1px solid black",
+                  margin: "10px",
+                }}
+              />
+              <button
+                type="button"
+                className="btn btn-outline-secondary"
+                onClick={() => {
+                  setIdRfid("");
+                }}
+                style={{
+                  border: "none",
+                  fontWeight: "bold",
+                }}
+              >
+                x
+              </button>
+            </div>
+          </form>
+        )}
         {selectedOption &&
           (selectedOption.value === "fechaIngreso" ||
             selectedOption.value === "fechaSalida" ||

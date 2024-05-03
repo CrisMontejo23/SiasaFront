@@ -6,6 +6,7 @@ import { gatewayURL } from "../../../services/principal";
 
 const Codigou = () => {
   let token = localStorage.getItem("token");
+  console.log(token);
 
   const [codigou, setCodigou] = useState([]);
   const [allCodigou, setAllCodigou] = useState([]);
@@ -188,7 +189,7 @@ const Codigou = () => {
             }}
           >
             <option value="idCodigoU">ID Codigo U</option>
-            <option value="rfidDto.idRfid">ID Rfid</option>
+            <option value="rfid.idRfid">ID Rfid</option>
             <option value="primerNombre">Primer Nombre</option>
             <option value="segundoNombre">Segundo Nombre</option>
             <option value="primerApellido">Primer Apellido</option>

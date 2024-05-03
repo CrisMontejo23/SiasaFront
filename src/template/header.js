@@ -63,30 +63,29 @@ class HeaderPrincipal extends React.Component {
       );
     }
 
-    return(
+    return (
       <React.Fragment>
         <Navbar className="bg-success text-white shadow" expand="lg" style={{
                   boxShadow: "3px 3px 10px rgba(0, 0, 0, 1)",
-                  fontWeight: "bold",}}>
+                  fontWeight: "bold",
+                }}>
           <img src={logo} alt="Logo" className="navbar-brand logo small-logo ml-3" height={35}/>          
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Button className="ml-auto" variant="outline-light" onClick={this.handleLogout} style={{marginRight: "40px"}}>Cerrar sesión <img
+          <Navbar.Collapse id="basic-navbar-nav">
+            <Nav className="mr-auto">
+              {links}
+            </Nav>
+          </Navbar.Collapse>
+          <Button variant="outline-light" onClick={this.handleLogout} style={{marginRight: "40px"}}>Cerrar sesión <img
                 src={require("../assetss/img/exit.png")}
                 alt="Reload"
                 width="20"
                 height="20"
                 style={{ cursor: "pointer", marginLeft: "5px" }}
               /></Button>
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="mr-auto">
-              {links}
-            </Nav>
-            <Nav className="mr-auto">              
-            </Nav>            
-          </Navbar.Collapse>
         </Navbar>
       </React.Fragment>
-    );
+    );        
   }
 }
 
