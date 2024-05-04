@@ -248,8 +248,7 @@ const RootUpdate = () => {
                     textAlignLast: "center",
                   }}
                 >
-                  <option value="">Seleccione el rol</option>
-                  <option value="ROOT">ROOT</option>
+                  <option value="">Seleccione el rol</option>                  
                   <option value="ADMIN">ADMIN</option>
                   <option value="BIBLIOTECA">BIBLIOTECA</option>
                   <option value="BIENESTAR">BIENESTAR</option>
