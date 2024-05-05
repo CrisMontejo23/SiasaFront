@@ -14,19 +14,19 @@ The backend of SIASA has been created by my colleague Juan Giraldo, who, like me
 
 This front-end interacts with the following microservices:
 
-1. **[siasa-principal](https://github.com/CpuJP/SiasaMicroservices/tree/siasa-principal) ->** This microservice is the main pillar of the SIASA architecture and performs all management and automation within the campus.
+1. **[siasa-gateway](https://github.com/CpuJP/SiasaMicroservices/tree/siasa-gateway) ->** This microservice is the gateway to the client, and the unification of each microservice offered by the SIASA architecture, in addition to being in charge of activating the circuit breaker in case of failure and solving that failure with a failover. The frontend is directly connected to this microservice which will handle all the routes.
 
-2. **[siasa-prestamos](https://github.com/CpuJP/SiasaMicroservices/tree/siasa-prestamos) ->** This microservice is linked to a database completely separate from that of the main microservice. It is in charge of inventories and loans of university welfare (sports and audiovisual material).
+In this repository you can find the React source code in its corresponding branch: **[React Source Code](https://github.com/CrisMontejo23/SiasaFront/tree/siasa-react-front)**
 
-3. **[siasa-reportes](https://github.com/CpuJP/SiasaMicroservices/tree/siasa-reportes) ->** This microservice is linked to two different databases (Siasa-Principal and Siasa-Prestamos). It is responsible for generating reports with statistical data of interest to the different administrators of each area.
+In addition to finding the code and executable of the program necessary to connect the RFID reader module to your computer and thus be able to integrate the Arduino hardware with the software: **[RFID Module Connector](https://github.com/CrisMontejo23/SiasaFront/tree/siasa-RFIDmodule)**
 
 ## Frontend Status
 
-The development of the frontend is in an advanced phase and is estimated to be close to completion. Currently, most of the main functionalities and components have already been successfully implemented. However, a crucial task that is still pending is the implementation of user authentication.
+The development of the frontend is in an advanced phase and is estimated to be close to completion. Currently, most of the main functionalities and components have already been successfully implemented. However, it's worth noting that the frontend has reached its stable version 2.5.2, indicating that it has undergone rigorous testing and is ready for production use.
 
 Authentication is a fundamental requirement for the application as it will allow users to access specific functionalities based on their roles. This functionality is directly related to the advancement of the backend, as both must work together to ensure a secure and efficient authentication system.
 
-Once the authentication implementation is complete, we can proceed with configuring the login system and managing user roles. This process will be done in close collaboration with the backend development team, as both parties must be synchronized to ensure consistency and integrity of the system.
+Once the authentication implementation is complete, we can proceed with configuring the login system and managing user roles. This process will be done in close collaboration with the backend development, as both parties must be synchronized to ensure consistency and integrity of the system.
 
 ## Docker Compose for SIASA Microservices
 
