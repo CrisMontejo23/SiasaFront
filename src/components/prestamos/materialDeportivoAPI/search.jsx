@@ -7,8 +7,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import "../../../assetss/css/App.css";
 
 const options = [
-  { value: "codigou", label: "Codigo Udec" },
-  { value: "idRfid", label: "ID Rfid" },
+  { value: "codigou", label: "Código Universitario" },
+  { value: "idRfid", label: "ID Carnet Rfid" },
   { value: "nombreObjeto", label: "Nombre del Objeto" },
   { value: "devolucionempty", label: "Devolución Vacía" },
   { value: "fechaprestamo", label: "Fecha de Prestamo" },
@@ -206,7 +206,7 @@ const Search = () => {
               }}
             >
               <input
-                type="text"
+                type="password"
                 value={idRfid}
                 onChange={(event) => {
                   // Solo actualiza el valor si el evento es un pegado
@@ -299,7 +299,7 @@ const Search = () => {
             >
               <thead>
                 <tr>
-                  <th style={{ border: "1px solid black" }}>ID Prestamo</th>
+                  <th style={{ border: "1px solid black" }}>ID</th>
                   <th style={{ border: "1px solid black" }}>Fecha Prestamo</th>
                   <th style={{ border: "1px solid black" }}>Nota</th>
                   {selectedOption &&
@@ -319,7 +319,9 @@ const Search = () => {
                   <th style={{ border: "1px solid black" }}>
                     Cantidad Prestada
                   </th>
-                  <th style={{ border: "1px solid black" }}>ID Udec</th>
+                  <th style={{ border: "1px solid black" }}>
+                    Código Universitario
+                  </th>
                   <th style={{ border: "1px solid black" }}>Nombre</th>
                   <th style={{ border: "1px solid black" }}>Apellido</th>
                 </tr>

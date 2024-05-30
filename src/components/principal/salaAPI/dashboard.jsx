@@ -211,7 +211,7 @@ const Dashboard = () => {
                   <th style={{ border: "1px solid black" }}>Fecha Ingreso</th>
                   <th style={{ border: "1px solid black" }}>Fecha Salida</th>
                   <th style={{ border: "1px solid black" }}>Sala Ingresada</th>
-                  <th style={{ border: "1px solid black" }}>ID CodigoU</th>
+                  <th style={{ border: "1px solid black" }}>Código Universitario</th>
                   <th style={{ border: "1px solid black" }}>Primer Nombre</th>
                   <th style={{ border: "1px solid black" }}>Segundo Nombre</th>
                   <th style={{ border: "1px solid black" }}>Primer Apellido</th>
@@ -266,7 +266,7 @@ const Dashboard = () => {
                   })
                 ) : (
                   <tr>
-                    <td colSpan="8" className="text-center align-middle">
+                    <td colSpan="9" className="text-center align-middle">
                       No hay datos registrados.
                     </td>
                   </tr>

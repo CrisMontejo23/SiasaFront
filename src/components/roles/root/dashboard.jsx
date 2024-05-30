@@ -79,7 +79,9 @@ const RootDashboard = () => {
           setData([]);
           return;
         }
-        setData(jsonData || []);
+        // Ordenar los datos por ID
+        const sortedData = jsonData.sort((a, b) => a.id - b.id);
+        setData(sortedData);
       } catch (error) {
         console.error("Error al obtener los datos:", error);
       }
@@ -179,7 +181,7 @@ const RootDashboard = () => {
           <br />
           <div
             className="container"
-            style={{ maxWidth: "1230px", overflowY: "auto", height: "auto" }}
+            style={{ maxWidth: "1000px", overflowY: "auto", height: "auto" }}
           >
             <table
               className="table table-striped"
@@ -212,15 +214,7 @@ const RootDashboard = () => {
                       textAlign: "center",
                     }}
                   >
-                    Contraseña Encriptada
-                  </th>
-                  <th
-                    style={{
-                      border: "1px solid black",
-                      textAlign: "center",
-                    }}
-                  >
-                    Roles
+                    Rol Asignado
                   </th>
                 </tr>
               </thead>
@@ -252,14 +246,6 @@ const RootDashboard = () => {
                           }}
                         >
                           {item.email}
-                        </td>
-                        <td
-                          style={{
-                            border: "1px solid black",
-                            textAlign: "center",
-                          }}
-                        >
-                          {item.password}
                         </td>
                         <td
                           style={{

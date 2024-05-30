@@ -166,7 +166,7 @@ const Update = () => {
                     fontWeight: "bold",
                   }}
                 >
-                  IdCodigoU
+                  Codigo Universitario
                 </label>
                 <input
                   type="text"
@@ -189,10 +189,10 @@ const Update = () => {
                     fontWeight: "bold",
                   }}
                 >
-                  IdRfid
+                  Id Carnet Rfid
                 </label>
                 <input
-                  type="text"
+                  type="password"
                   name="rfidDto.idRfid"
                   value={data?.rfidDto.idRfid || ""}
                   onChange={handleInputChange}

@@ -7,8 +7,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import "../../../assetss/css/App.css";
 
 const options = [
-  { value: "codigo", label: "Codigo" },
-  { value: "idRfid", label: "ID Rfid" },
+  { value: "codigo", label: "Código Universitario" },
+  { value: "idRfid", label: "ID Carnet Rfid" },
   { value: "fechaIngreso", label: "Fecha de Ingreso" },
   { value: "codigoFechaIngreso", label: "Codigo y Fecha de Ingreso" },
 ];
@@ -210,7 +210,7 @@ const Search = () => {
               }}
             >
               <input
-                type="text"
+                type="password"
                 value={idRfid}
                 onChange={(event) => {
                   // Solo actualiza el valor si el evento es un pegado
@@ -291,7 +291,7 @@ const Search = () => {
                 <tr>
                   <th style={{ border: "1px solid black" }}>ID</th>
                   <th style={{ border: "1px solid black" }}>Fecha Ingreso</th>
-                  <th style={{ border: "1px solid black" }}>ID CodigoU</th>
+                  <th style={{ border: "1px solid black" }}>Código Universitario</th>
                   <th style={{ border: "1px solid black" }}>Primer Nombre</th>
                   <th style={{ border: "1px solid black" }}>Segundo Nombre</th>
                   <th style={{ border: "1px solid black" }}>Primer Apellido</th>

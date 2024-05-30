@@ -49,8 +49,8 @@ const Rfid = () => {
             setErrorMessage("No hay Rfid sin asignar.");
             audioError.play();
           } else if (error.response.status === 500) {
-            setErrorMessage("Error interno del servidor.");
-            audioError.play();
+            //setErrorMessage("Error interno del servidor.");
+            //audioError.play();
           }
         } else {
           setErrorMessage("Error desconocido.");
@@ -95,11 +95,11 @@ const Rfid = () => {
             setErrorMessage("");
           }, 2500);
         } else if (response.status === 500) {
-          setErrorMessage("Error interno del servidor.");
-          audioError.play();
-          setTimeout(() => {
-            setErrorMessage("");
-          }, 2500);
+          //setErrorMessage("Error interno del servidor.");
+          //audioError.play();
+          //setTimeout(() => {
+          //setErrorMessage("");
+          //}, 2500);
         }
         if (!response.ok) {
           throw new Error(response.status);
@@ -129,8 +129,7 @@ const Rfid = () => {
 
   const handleRegisterClick = (event) => {
     event.preventDefault();
-    const regex =
-      /^[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}$/;
+    const regex = /^([A-Fa-f0-9]{2}:){15}[A-Fa-f0-9]{2}$/;
     if (regex.test(rfid)) {
       registerRfid(rfid);
     } else {
@@ -158,10 +157,10 @@ const Rfid = () => {
             setErrorMessage("");
           }, 2500);
         } else if (error.response && error.response.status === 500) {
-          setErrorMessage("Error interno del servidor.");
-          setTimeout(() => {
-            setErrorMessage("");
-          }, 2500);
+          //setErrorMessage("Error interno del servidor.");
+          //setTimeout(() => {
+          //setErrorMessage("");
+          //}, 2500);
         } else {
           setErrorMessage(error.message);
           setTimeout(() => {
@@ -190,11 +189,11 @@ const Rfid = () => {
             setErrorMessage("");
           }, 2500);
         } else if (response.status === 500) {
-          setErrorMessage("Error interno del servidor.");
-          audioError.play();
-          setTimeout(() => {
-            setErrorMessage("");
-          }, 2500);
+          //setErrorMessage("Error interno del servidor.");
+          //audioError.play();
+          //setTimeout(() => {
+          //setErrorMessage("");
+          //}, 2500);
           setRfidList([]);
         }
       })
@@ -248,11 +247,11 @@ const Rfid = () => {
             setErrorMessage("");
           }, 2500);
         } else if (response.status === 500) {
-          setErrorMessage("Error interno del servidor.");
-          audioError.play();
-          setTimeout(() => {
-            setErrorMessage("");
-          }, 2500);
+          //setErrorMessage("Error interno del servidor.");
+          //audioError.play();
+          //setTimeout(() => {
+          //setErrorMessage("");
+          //}, 2500);
         }
       })
       .catch((error) => {
@@ -269,6 +268,11 @@ const Rfid = () => {
   useEffect(() => {
     fetchRfidList();
   }, [pageNumber, pageSize]);
+
+  const maskRfid = (rfid) => {
+    if (rfid.length <= 5) return rfid;
+    return rfid.slice(0, 8) + "*".repeat(rfid.length - 8);
+  };
 
   return (
     <div style={{ backgroundColor: "white" }}>
@@ -290,13 +294,13 @@ const Rfid = () => {
                 Buscar:
               </label>
               <input
-                type="text"
+                type="password"
                 className="form-control mr-2"
                 id="exampleInputPassword1"
                 placeholder="ACERQUE EL CARNET"
                 style={{
                   textTransform: "uppercase",
-                  width: "240px",
+                  width: "300px",
                   boxShadow: "3px 3px 10px rgba(0, 0, 0, 1)",
                 }}
                 value={rfid}
@@ -456,7 +460,7 @@ const Rfid = () => {
         <br />
         <div
           className="container"
-          style={{ maxWidth: "400px", overflowY: "auto", height: "auto" }}
+          style={{ maxWidth: "600px", overflowY: "auto", height: "auto" }}
         >
           <table
             className="table table-striped"
@@ -490,7 +494,7 @@ const Rfid = () => {
                         {index + 1}
                       </th>
                       <td style={{ border: "1px solid black" }}>
-                        {value.idRfid}
+                        {maskRfid(value.idRfid)}
                       </td>
                       <td style={{ width: "42px", border: "1px solid black" }}>
                         <button

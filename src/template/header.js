@@ -43,7 +43,7 @@ class HeaderPrincipal extends React.Component {
       links = (
         <>
           <Nav.Link href="/rfid" className="text-white">Rfid</Nav.Link>
-          <Nav.Link href="/codigou" className="text-white">Codigo U</Nav.Link>
+          <Nav.Link href="/codigou" className="text-white">Código U</Nav.Link>
           <Nav.Link href="/campus/dashboard" className="text-white">Campus</Nav.Link>  
           <Nav.Link href="/biblioteca/dashboard" className="text-white">Biblioteca</Nav.Link>     
           <Nav.Link href="/sala/dashboard" className="text-white">Salas de Cómputo</Nav.Link>

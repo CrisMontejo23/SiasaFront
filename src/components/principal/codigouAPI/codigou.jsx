@@ -60,6 +60,11 @@ const Codigou = () => {
     }
   }, [searchId]); // Este efecto se ejecutará cada vez que el valor de searchId cambie
 
+  const maskRfid = (rfid) => {
+    if (rfid.length <= 5) return rfid;
+    return rfid.slice(0, 8) + "*".repeat(rfid.length - 8);
+  };
+
   return (
     <div style={{ backgroundColor: "white" }}>
       <React.Fragment>
@@ -182,13 +187,13 @@ const Codigou = () => {
             value={sortBy}
             onChange={(e) => setSortBy(e.target.value)}
             style={{
-              width: "155px",
+              width: "175px",
               height: "40px",
               marginRight: "15px",
               boxShadow: "3px 3px 10px rgba(0, 0, 0, 1)",
             }}
           >
-            <option value="idCodigoU">ID Codigo U</option>
+            <option value="idCodigoU">Codigo Universitario</option>
             <option value="rfid.idRfid">ID Rfid</option>
             <option value="primerNombre">Primer Nombre</option>
             <option value="segundoNombre">Segundo Nombre</option>
@@ -249,10 +254,10 @@ const Codigou = () => {
             <thead>
               <tr className="text-center">
                 <th scope="col" style={{ border: "1px solid black" }}>
-                  ID Codigo U
+                  Codigo Universitario
                 </th>
                 <th scope="col" style={{ border: "1px solid black" }}>
-                  ID Rfid
+                  ID Carnet Rfid
                 </th>
                 <th scope="col" style={{ border: "1px solid black" }}>
                   Primer Nombre
@@ -276,7 +281,7 @@ const Codigou = () => {
                       {value.idCodigoU}
                     </th>
                     <td style={{ border: "1px solid black" }}>
-                      {value.rfidDto.idRfid}
+                      {maskRfid(value.rfidDto.idRfid)}
                     </td>
                     <td style={{ border: "1px solid black" }}>
                       {value.primerNombre}

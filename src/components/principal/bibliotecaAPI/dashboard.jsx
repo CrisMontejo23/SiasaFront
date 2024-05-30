@@ -79,14 +79,14 @@ const Dashboard = () => {
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
               style={{
-                width: "155px",
+                width: "175px",
                 height: "40px",
                 marginRight: "15px",
                 boxShadow: "3px 3px 10px rgba(0, 0, 0, 1)",
               }}
             >
               <option value="">Seleccionar</option>
-              <option value="codigoU.idCodigoU">ID Codigo U</option>
+              <option value="codigoU.idCodigoU">Código Universitario</option>
               <option value="codigoU.primerNombre">Primer Nombre</option>
               <option value="codigoU.segundoNombre">Segundo Nombre</option>
               <option value="codigoU.primerApellido">Primer Apellido</option>
@@ -208,7 +208,7 @@ const Dashboard = () => {
                 <tr>
                   <th style={{ border: "1px solid black" }}>ID</th>
                   <th style={{ border: "1px solid black" }}>Fecha Ingreso</th>
-                  <th style={{ border: "1px solid black" }}>ID CodigoU</th>
+                  <th style={{ border: "1px solid black" }}>Código Universitario</th>
                   <th style={{ border: "1px solid black" }}>Primer Nombre</th>
                   <th style={{ border: "1px solid black" }}>Segundo Nombre</th>
                   <th style={{ border: "1px solid black" }}>Primer Apellido</th>
